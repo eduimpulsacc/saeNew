@@ -1,0 +1,11 @@
+<chart caption='Annual Sales Summary (2010-2011)'xAxisName='Year' yAxisName='Sales' numberPrefix='$' showValues='0' useRoundEdges='1'>
+
+    <set label='2006' value='11610'/>
+
+    <set label='2007' value='10430'/>
+
+    <set label='2008' value='10170'/>
+
+    <set label='2009' value='11560'/>
+
+</chart>

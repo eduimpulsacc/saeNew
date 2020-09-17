@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<title>menu</title>
+		
+		<link rel="stylesheet" href="css/styles.css">
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+						
+	</head>
+<body>
+
+<div id="wrapper"><img src="images/redondo.jpg" width="220" height="22">
+	<ul class="menu">
+   	  <li class="item1"><a href="#">Seleccione Institución</a></li>
+        <li class="item1"><a href="#">Estadística de Conexión</a></li>
+		<li class="item1"><a href="#">Reportes Estadísticos</a>
+	      <ul>
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange “Stuff” </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+		  </ul>
+		</li>
+        <li class="item1"><a href="#">Selecciona Curso</a></li>
+        <li class="item1"><a href="#">Administración</a></li>
+		<li class="item2"><a href="#">Configuración </a>
+			<ul>
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange “Stuff” </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+		  </ul>
+	  </li>
+		<li class="item3"><a href="#">Libro de Clases</a>
+	      <ul>
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange “Stuff” </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+		  </ul>
+		</li>
+		<li class="item4"><a href="#">Postulación </a>
+			<ul>
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange “Stuff” </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+			</ul>
+		</li>
+	<li class="item5"><a href="#">Información Colegio</a>
+			<ul>
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange "Stuff" </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+			</ul>
+	  </li>
+      
+      <li class="item6"><a href="#">Comunicaciones</a>
+			<ul>
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange "Stuff" </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+			</ul>
+	  </li>
+
+        
+          <li class="item8"><a href="#">Video Tutoriales</a>
+			<ul>
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange "Stuff" </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+			</ul>
+		</li>
+        
+           <li class="item9"><a href="#">Personal</a>
+			<ul>
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange "Stuff" </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+			</ul>
+		</li>
+        
+           <li class="item10"><a href="#">Soporte</a>
+			<ul>
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange "Stuff" </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+			</ul>
+		</li>
+        
+           <li class="item11"><a href="#">Encuentros</a>
+			<ul>
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange "Stuff" </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+			</ul>
+		</li>
+        
+           <li class="item11"><a href="#">SIGE</a>
+			<ul>
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange "Stuff" </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+			</ul>
+		</li>
+        
+        <li class="item1"><a href="#">EVADOS</a></li>
+        <li class="item1"><a href="#">P.M.E.</a></li>
+      
+  </ul>
+
+</div>
+
+<!--initiate accordion-->
+<script type="text/javascript">
+	$(function() {
+	
+	    var menu_ul = $('.menu > li > ul'),
+	           menu_a  = $('.menu > li > a');
+	    
+	    menu_ul.hide();
+	
+	    menu_a.click(function(e) {
+	        e.preventDefault();
+	        if(!$(this).hasClass('active')) {
+	            menu_a.removeClass('active');
+	            menu_ul.filter(':visible').slideUp('normal');
+	            $(this).addClass('active').next().stop(true,true).slideDown('normal');
+	        } else {
+	            $(this).removeClass('active');
+	            $(this).next().stop(true,true).slideUp('normal');
+	        }
+	    });
+	
+	});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+
+td  { 
+	color: black; 
+	font-style: normal; 
+	font-weight: bold; 
+	font-size: 14px; 
+	font-family: arial, geneva, helvetica; 
+	text-decoration: none 
+}
+
+.td2  { 
+	color: black; 
+	font-style: normal; 
+	font-weight: bold; 
+	font-size: 10px; 
+	font-family: arial, geneva, helvetica; 
+	text-decoration: none 
+}
+
+a:link   { color : #FF0033; text-decoration : none; }
+a:visited{ color : #FF6633; text-decoration : none; }
+a:hover  { color : #99CC00; text-decoration : none; }
+a:active { color : #66CC00; text-decoration : none; }
+
+body{
+background-color : #FFFFFF;
+font-family :  Arial, Verdana, Helvetica, sans-serif;
+font-size : 11px;
+}
+
+.button {
+	font-family :  Arial,Verdana, Helvetica, sans-serif;
+	font-size : 10px;
+	font-weight : bold;
+}
+
+.tabla_1 {
+	border : 1 solid #C0C0C0;
+	background : #E4E4E4;
+    color :  #696969;
+	font-family : Arial, Verdana, Helvetica, sans-serif;
+	font-size : 10px;
+}
+
+.tabla_2 {
+	border : 0 solid #C0C0C0;
+	background : #B0C4DE;
+       color : #330000;
+	font-family : Arial, Verdana, Helvetica, sans-serif;
+	font-size : 10px;
+}
+
+.tabla_3 {
+	border : 0 solid #C0C0C0;
+	background : #B0C4DE;
+    color :  #696969;
+	font-family : Arial, Verdana, Helvetica, sans-serif;
+	font-size : 7px;
+}
+
+.editbox {
+	border : 1 solid #C0C0C0;
+	background : white;
+	color : #7D7D7D;
+	font-family : Arial, Verdana, Helvetica, sans-serif;
+	font-size : 10px;
+}
+
+.title { color: white; font-weight: bolder; font-size: 10px; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+.title2 { color: black; font-weight: bolder; font-size: 12px; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+
+.da	{ background-color:	#FFFFD7; }
+
+.fs	{ background-color:	#EAEAEA; }

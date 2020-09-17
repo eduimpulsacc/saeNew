@@ -1,0 +1,1 @@
+<?php include($DOCUMENT_ROOT . "/incudedfiles/menus.php"); ?> 

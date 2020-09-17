@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<project>
+    <host>200.2.201.33</host>
+    <name>coe</name>
+    <user>postgres</user>
+    <pass>Y29sZbduZXdhY2Nlc3M=</pass>
+    <type>native-pgsql</type>
+    <dict></dict>
+</project>
+

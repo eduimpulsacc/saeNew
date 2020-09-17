@@ -1,0 +1,72 @@
+body
+{ 
+	background:#F0EBF1;
+	margin:0 auto;	 
+	height:auto;
+	width:auto;
+}
+
+.slide{
+	border: .2em solid #999999;
+    width: 1157px;
+    height: 207px;
+    margin: 1% auto; 
+    border-radius: .5em;
+    box-shadow: 3px 3px 1px #888;
+    position: relative;
+}
+ 
+.slide img{
+	width: 1157px;
+	height: 207px;
+	position: absolute;
+	left: 4px;
+}
+ 
+.slide .img2, .slide .img3, .slide .img4 {
+    display: none;
+}
+figure{
+    margin: 0;
+}
+
+.logo
+{  
+    width: 500px;
+    height: 150px;
+    margin: 2% auto;
+    box-shadow: 3px 3px 1px #888;
+    position: relative;
+}
+
+.logo img
+{
+	width: 500px;
+    height: 150px;
+    position: absolute;
+}
+
+#formulario
+{
+	margin: 0 auto;	 
+	text-align:center;
+	font-family: "Berlin Sans FB"; font-size:17px;
+	color: #369; 
+}
+
+footer,#recpass
+{
+	margin: 0 auto;
+	width: 200px;
+	font-family: "Berlin Sans FB";
+}
+
+
+#boton
+{
+	width: 90px;
+	background-color: royalblue;
+	color: blanchedalmond;
+	font-family: "Berlin Sans FB";
+	font-size:15px;	
+}

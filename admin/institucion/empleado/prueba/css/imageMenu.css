@@ -1,0 +1,62 @@
+
+/*big menu*/
+
+#kwick {
+	position: relative;
+	/*border-bottom: 3px double #333;*/
+	margin-top: 0px;
+}
+
+#kwick ul{
+       list-style:none;
+       }
+# .kwicks {
+	display: block;
+	height: 200px;
+	margin: 0px;
+}
+
+#kwick li {
+	float: left;
+}
+
+li:after {
+	content: "";
+}
+
+#kwick .kwick {
+	display: block;
+	cursor: pointer;
+	overflow: hidden;
+	height: 50px;
+	width: 100px;
+	/*padding: 10px;*/
+	background: #fff;
+	/*border-right: 5px solid #202020;*/
+	border-right: 2px solid #fff;
+}
+
+#kwick .kwick span {
+	display: none;
+}
+
+#kwick .opt1 {
+outline: 0; background: #9ce782 url(../images/Datos_personales.jpg) no-repeat;
+}
+
+#kwick .opt2 {
+outline: 0; background: #92bdfa url(../images/autorizacion_docente.jpg);
+}
+
+#kwick .opt3 {
+ outline: 0; background: #faa892 url(../images/curriculum.jpg);
+}
+
+#kwick .opt4 {
+  outline: 0; background: #e78282 url(../images/acceso_web.jpg);
+}
+
+#kwick .opt5 {
+outline: 0; background: #000 url(../images/grupos.jpg);
+	border-right: 0;
+}

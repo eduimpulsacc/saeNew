@@ -1,0 +1,86 @@
+/* CSS Document */
+
+enlaceboton { font-family: verdana, arial, sans-serif;
+font-size: 10pt;
+font-weight: bold;
+padding: 4px;
+background-color: #ffffcc;
+color: #666666;
+text-decoration: none;
+}
+.enlaceboton:link,
+.enlaceboton:visited {
+border-top: 1px solid #cccccc;
+border-bottom: 2px solid #666666;
+border-left: 1px solid #cccccc;
+border-right: 2px solid #666666;
+}
+.enlaceboton:hover {
+border-bottom: 1px solid #cccccc;
+border-top: 2px solid #666666;
+border-right: 1px solid #cccccc;
+border-left: 2px solid #666666;
+}
+.tabla1{
+border-collapse:collapse;
+empty-cells: show;
+border-color:#4A3C93;
+
+}
+
+.tabla2{
+border-collapse:collapse;
+empty-cells: show;
+table-layout:auto;
+border-color:#FFFFFF;
+border-bottom:double;
+border-spacing:5em 1em;
+height:15em;
+}
+.titulo1{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:14px;
+font-style:normal;
+font-weight: bold;
+color:#FFFFFF;
+text-align:center;
+text-decoration:underline;
+background-color:#4A3C93;
+}
+.membrete{
+font-family:Geneva, Arial, Helvetica, sans-serif;
+font-size:12px;
+font-style:inherit;
+font-weight: bold;
+}
+.celdas1{
+background-color:#4A3C93;
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:9px;
+text-align:center;
+color:#FFFFFF;
+}
+.fecha{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:9px;
+font-style:italic;
+text-align:right;
+}
+.text{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:9px;
+font-stretch:condensed;
+}
+
+.text2{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:9px;
+font-stretch:condensed;
+text-align:right;
+}
+.text3{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:12px;
+font-stretch:condensed;
+text-align:center;
+}

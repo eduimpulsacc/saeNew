@@ -1,0 +1,11 @@
+@charset "utf-8";
+/* CSS Document */
+
+.validator-message {
+	position: absolute;
+	background: #FFF url(imgs/ico-error.png) no-repeat center left;
+	border: solid 1px #CCC;
+	padding: 3px 5px 3px 19px;
+	font-size: 12px;
+	color: #999;
+}

@@ -1,0 +1,62 @@
+@charset "UTF-8";
+/* CSS Document */
+
+#arriba { /*width: 1151px;*/ height:230px;}
+#arriba_12 { /*width: 1151px;*/ height:70px;
+/*background-image:url(img/arriba.jpg);*/
+font-size:24px;
+font-family:Verdana, Geneva, sans-serif;
+color:#FFF;
+
+}
+#arriba_2 { /*width: 1151px;*/ height:160px;
+border-bottom: 2px solid #999;
+}
+
+#footer { width: 1150px; height:89px;}
+
+#contenido { width: 885px; height:700px;}
+
+#cuadro1 { 
+width: 500px;
+height:675px;
+margin-top:12px;
+margin-left:10px;
+float:left;
+padding-top:130px;
+font-size:12px;
+font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+background-image:url(img/500x675.jpg);
+background-repeat: no-repeat;
+}
+
+.txt_fecha{
+width:400px;
+color:#F0C;
+margin:5px;
+padding-top:5px;
+font-size:13px;
+font-family:"Trebuchet MS",Arial, Helvetica, sans-serif;
+float:left;}
+
+.txt_informa{
+width:400px;
+color:#06C;
+margin:5px;
+padding-top:5px;
+font-size:12px;
+font-family:"Trebuchet MS",Arial, Helvetica, sans-serif;
+float:left;}
+
+#cuadro2{
+width: 350px;
+height:675px;
+float: right;
+margin-top:12px;
+margin-right:10px;
+background-image:url(img/350x675.jpg);
+
+
+
+}
+

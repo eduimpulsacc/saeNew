@@ -1,0 +1,17 @@
+
+#formulario
+{
+	margin:auto;	 
+	text-align: right;
+	font-family: Arial; font-size:17px; 
+	color: #b80e78; 
+}
+
+#boton
+{
+	width: 90px;
+	background-color: royalblue;
+	color: blanchedalmond;
+	font-family: "Berlin Sans FB";
+	font-size:15px;	
+}

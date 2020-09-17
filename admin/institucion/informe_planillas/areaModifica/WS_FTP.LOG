@@ -1,0 +1,6 @@
+2004.07.05 16:39 B C:\windows\escritorio\coe 05-07-2004\admin\institucion\informe_planillas\area\area.php <-- server up /opt/www/coe/admin/institucion/informe_planillas/area area.php
+2004.07.05 16:39 B C:\windows\escritorio\coe 05-07-2004\admin\institucion\informe_planillas\area\creaArea.php <-- server up /opt/www/coe/admin/institucion/informe_planillas/area creaArea.php
+2004.07.05 16:39 B C:\windows\escritorio\coe 05-07-2004\admin\institucion\informe_planillas\area\procesoArea.php <-- server up /opt/www/coe/admin/institucion/informe_planillas/area procesoArea.php
+2004.07.05 18:21 B C:\windows\escritorio\coe 05-07-2004\admin\institucion\informe_planillas\area\area.php --> 192.168.1.10 /var/www/html/coe_prueba/admin/institucion/informe_planillas/area area.php
+2004.07.05 18:21 B C:\windows\escritorio\coe 05-07-2004\admin\institucion\informe_planillas\area\creaArea.php --> 192.168.1.10 /var/www/html/coe_prueba/admin/institucion/informe_planillas/area creaArea.php
+2004.07.05 18:21 B C:\windows\escritorio\coe 05-07-2004\admin\institucion\informe_planillas\area\procesoArea.php --> 192.168.1.10 /var/www/html/coe_prueba/admin/institucion/informe_planillas/area procesoArea.php

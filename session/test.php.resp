@@ -1,0 +1,51 @@
+<?php  
+// Create a custom exception error handler for pg_connect
+function exception_error_handler($errno, $errstr, $errfile, $errline ) {
+    throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+}
+// Set the error handler
+set_error_handler("exception_error_handler");
+
+// Force output of all errors
+error_reporting(E_ALL);
+
+// Define constants
+define('DB_HOST', '1.1.1.1');
+define('DB_USER', 'USR');
+define('DB_PASS', 'PW');
+define('DB_NAME', 'DB');
+define('DB_PORT', '5432');
+
+// Connection string with SSL certificate files
+$conn_str  = 'host=' . DB_HOST . ' ';
+$conn_str .= 'port=' . DB_PORT . ' ';
+$conn_str .= 'dbname=' . DB_NAME . ' ';
+$conn_str .= 'user=' . DB_USER . ' ';
+$conn_str .= 'password=' . DB_PASS . ' ';
+$conn_str .= 'sslmode=require ';
+$conn_str .= 'sslcert=/etc/apache2/ssl/postgresql.crt ';
+$conn_str .= 'sslkey=/etc/apache2/ssl/postgresql.key ';  
+
+// Try catch block grabbing stored exception
+try {
+    echo "Attempting pg_connect: " . $conn_str . "<br>";
+    $conn=@pg_connect($conn_str);
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
+
+// Attempt Connection
+$conn = pg_connect($conn_str) or die('Cannot connect to database.');
+
+// Set SQL String
+$sql = 'SELECT * FROM locations'; 
+
+// Attempt query and iterate results
+if(result = pg_query($conn, $sql)) 
+    while($row=pg_fetch_row($result)) {
+        var_dump($row);
+    } 
+
+// Close it up
+pg_close();
+?>

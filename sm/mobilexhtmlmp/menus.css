@@ -1,0 +1,50 @@
+@charset "utf-8";
+/* CSS Document */
+		
+#menu {
+  font: 80% "Trebuchet MS", Arial, Helvetica, sans-serif;
+  /*margin-top: 20px;*/
+ }
+
+#menu ul, li {
+  list-style-type: none;
+}
+
+#menu ul {
+  margin:0;
+  padding:0;
+}
+
+#menu li {
+   list-style-type: none;
+}
+
+#menu a {
+  text-decoration: none;
+  color:#FFFFFF;
+  background:#333333;
+  display: block;
+  padding: 3px 10px;
+  text-align: center;
+  border: 1px solid #FFFFFF;
+  border-width: 1px 1px 1px 0;
+  background-image: url(rayo_movil.png);
+  height:10px;
+}
+
+#menu a#primero {
+   border-left: 1px solid #ACCFE8;
+}
+
+#menu a:hover {
+  background-image: url(Fondo_Header_Movil.png);
+  height:10px;
+ }
+
+.curved {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  behavior:url(border-radius.htc);
+}
+
+/*http://vagabundia.blogspot.com/2008/04/ie8-y-el-futuro-css.html*/

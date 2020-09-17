@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Body>
+	<SalidaAddAsistenciaSige xmlns="http://dido.mineduc.cl/Archivos/Schemas/">
+	<CodigoRespuestaAsistencia>2</CodigoRespuestaAsistencia>
+	<ListadoMensajes>
+		<Titulo>LISTADO DE ERRORES DE VALIDACION DE NEGOCIO</Titulo>
+		<Mensaje xsi:type="xsd:string">LETRA CURSO (A) RECHAZADO, FALTA INFORMAR ASISTENCIA DE 2 ALUMNO(S).</Mensaje>
+		<Mensaje xsi:type="xsd:string">LETRA CURSO (A) RUN 21090989 FALTANTE.</Mensaje>
+		<Mensaje xsi:type="xsd:string">LETRA CURSO (A) RUN 21121694 FALTANTE.</Mensaje>
+	</ListadoMensajes>
+	</SalidaAddAsistenciaSige>
+	</soapenv:Body>
+</soapenv:Envelope>

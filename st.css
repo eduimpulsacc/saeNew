@@ -1,0 +1,20 @@
+body {
+	background-color : #8090A0;
+	background-image : url(img/bg1.gif);
+	background-repeat : repeat-x;
+}
+
+.fo{
+	background-image: url(img/bg2.gif);
+	background-repeat: repeat-x;
+	background-position: bottom;
+	vertical-align: middle;
+	text-align: center;
+	height: 29px;
+}
+
+td{
+	font-family: Veranda, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ffffff;
+}

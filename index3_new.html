@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+body {
+background: url(cortes/1280x925_2.jpg) no-repeat center  center fixed;
+-webkit-background-size:cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+
+}
+</style>
+<meta http-equiv="Expires" content="0">
+ 
+<meta http-equiv="Last-Modified" content="0">
+ 
+<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+ 
+<meta http-equiv="Pragma" content="no-cache">
+</head>
+</html>
+<br>
+<br>
+<html lang="en">
+<head>
+	<title>SAE - Sistema de Administraci&oacute;n Escolar</title>
+	<link rel="stylesheet" href="cortes/style_new.css">
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="cortes/functions.js"></script> 
+    
+    <script>
+	function valida(){
+		if($("#txtNOMBRE").val()==""){
+			alert("DEBE INGRESAR USUARIO");	
+			$("#txtNOMBRE").focus()
+		}else if($("#txtPW").val()==""){
+			alert("DEBE INGRESAR PASSWORD");
+			$("#txtPW").focus()	
+		}else{
+			document.form.submit(true);
+		}
+	}
+	</script>
+</head>
+<body>
+<form name="form" action="session/chkUser.php" method="post" target="_self" >
+  <div id="formulario">
+<br>
+    
+<br>
+    <br> 
+    <!--<img src="cortes/SAE_3.png" width="408" height="190">-->
+   
+  <table style=" position:  absolute; top:220px; left:745px;"  width="485"  height="204"border="0" align="right" cellpadding="0" cellspacing="0" background="cortes/panta_inicio_def_op5_FONDO2.png">  
+    <tr>
+    <td width="262" height="89">
+   
+    </td>
+    <td width="223" align="left"> 
+     <!--<img src="cortes/texto_in.png" width="285" height="69" />--><br>
+     <br></td>
+    </tr>
+      <tr>
+        <td align="right">Usuario</td>
+        <td align="center"><input name="txtNOMBRE" type="text" id="txtNOMBRE" class="input"></td>
+      <tr>
+        <td>&nbsp;</td> 
+  </tr>
+      </tr>
+      <tr>
+        <td align="right">Clave</td>
+        <td align="center"><input name="txtPW" type="password" id="txtPW" class="input"></td>
+      </tr>
+      <tr>
+      <td height="19" colspan="2" align="right">&nbsp;
+       <a href="recuperaClave/formRecupera2.php" target="_blank" onClick="window.open(this.href, this.target, 'width=550,height=690'); return false;"style="text-decoration:none; font-color:#BF1E85;font-size:10px;padding-right:12px">¿Olvidó su contraseña?</a>
+         </td>
+      </tr>
+       <tr>
+        <td colspan="2" align="center"><input id="boton" name="boton" type="button" value="Entrar"  onClick="valida()"/></td>
+      </tr>
+  </table>
+</form> 
+
+  
+</div>
+</body>
+</html>

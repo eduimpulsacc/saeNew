@@ -1,0 +1,29 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<title>Validar entrada de datos</title>
+<script type="text/javascript">
+function validar(e) { // 1
+
+tecla = (document.all) ? e.keyCode : e.which; // 2
+//if (tecla==8) return true; // 3
+//* patron = /[ajt69]/; acepta determinados caracteres elegidos porti
+//*patron =/[javierb]/; // 4 evita cararteres elegidos por ti requiere lo de abajo
+//*te = String.fromCharCode(tecla); // 5
+//*return !patron.test(te); // 6
+//* patron = /d/; // Solo acepta números
+//* patron = /w/; // Acepta números y letras
+//patron = /D/; //evita numeros
+patron =/[A-Za-zñÑs]/; // 4 solo admite letras y ñ
+te = String.fromCharCode(tecla); // 5
+return patron.test(te); // 6
+
+}
+</script>
+</head>
+
+<body>
+<p><input type="text" name="textfield" onKeyPress="return validar(event)" /><br />
+<textarea rows="5" cols="20" onKeyPress="return validar(event)"></textarea></p>
+</body>
+</html>

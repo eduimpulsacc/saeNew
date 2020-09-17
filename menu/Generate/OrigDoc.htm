@@ -1,0 +1,264 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<TITLE>Cross Browser Expand/Collapse ToC Menu</TITLE>
+<script  language="JavaScript" src="generate.js"></script ></HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" onload="genHeadNums();genTocTable('TocMenu.htm');close()">
+
+<div align="center">
+<H1>A Cross Browser Expanding and Collapsing Table of Contents Menu</H1>
+<p><i>by Dieter Bungers,
+<br><a href="http://www.gmd.de/Welcome.en.html" target="_blank">GMD</a> &#150; German National Research Center for Information Technology
+<br>Department for Innovative Consulting and Development (IBE)</i></p> 
+</div>
+<H1>Introduction</H1>
+<H2>Technical Documents in the Web </H2>
+<P>Most technical documents published in the web usually provide at the beginning a table of contents (ToC) of which each heading is hyperlinked to a chapter or section of the document so it functions as an interactive menu (ToC menu). </P>
+<P>Some typical examples of such documents are the <A HREF="http://www.w3.org/TR/" target="_blank">W3C Technical Reports and Publications</A> such as the Recommendations of <A HREF="http://www.w3.org/TR/REC-CSS1" target="_blank">Cascading Style Sheets (CSS1) Level 1 Specification</A> and <A HREF="http://www.w3.org/TR/xpath" target="_blank">XML Path Language (XPath) Version 1.0</A>, or the Working Draft for the <A HREF="http://www.w3.org/TR/1999/WD-xsl-19990421/" target="_blank">Extensible Stylesheet Language (XSL) Specification</A>. Other examples are the <A HREF="http://de.php.net/" target="_blank">PHP Hypertext Preprocessor</A> and the <A HREF="http://www.mysql.net/" target="_blank">MySQL</A> reference manuals you can download with the respective software for offline use.</P>
+<P>The practical use of a document organized this way is somewhat uncomfortable: The ToC menu disappears from the screen after the user clicked into one of its headings in order to display the section belonging to it. If he wants to display the ToC menu again he must browse or scroll back. After jumping from one section to another by clicking an internal hyperlink it is sometimes hard for him to find out the line of the ToC menu belonging to the new section. </P>
+<P>It would be more comfortable if the ToC is displayed in a separate frame and expands and collapses so just the required parts of it are visible.</P>
+<H2>About this Paper</H2>
+<P>This paper describes how you can easy build up such expanding and collapsing ToC menu by using a technique that is based on JavaScript and works with Internet Explorer and Netscape Navigator as well.</P> 
+<P>Furthermore, we show how you can easy number the headings of your document and generate the ToC menu automatically.</P>
+<H2>Some Examples</H2>
+<H3>Web version of this paper</H3>
+<P>This paper does not only explain how such expanding and collapsing ToC menu works. It also demonstrates the functionality at once. For this purpose, its content is divided into more chapters and sections of different hierarchical levels than probably would be necessary. Feel free to click into the headings of the ToC menu on the left or into an internal hyperlink on the right side to see how the technique functions.</P>
+<P>Windows users can download all files that belong to this paper and its ToC by clicking <a href="tocmenu.zip">here (Zip archive, 30KB)</a>.</P>
+<H3>Further Examples </H3>
+<P>There are some further examples in the web: One of them is our collection of the documents cited above at <A HREF="http://www.infovation.de/Docs/" target="_blank">http://www.infovation.de/Docs/</A>. Once started with one of the documents you can use the ToC frame also to easy navigate to another document of the collection with another ToC. On the other hand, this example doesn't provide automatic synchronization (<A HREF="javaScript:parent.reDisplay('2.2.2',false)">see below</A>). </P>
+<P>Another example is the product description "Easymail, the All-in-one Internetserver" at <A HREF="http://www.infovation.de/easymail/" target="_blank">http://www.infovation.de/easymail/</A> (only in German Language). It demonstrates the full functionality except --for design reasons-- the automatic scrolling (<A HREF="javaScript:parent.reDisplay('2.2.6',false)">see below</A>). </P>
+<H1>Features</H1>
+<P>In the following sections we summarize the main technical and functional features of our ToC menu.</P>
+<H2>Technical features</H2>
+<H3>Cross browser capability</H3>
+<P>The technique works with MS Internet Explorer 4+ as well as with Netscape Navigator 4+.</P>
+<H3>Offline capability</H3>
+<P>The technique is realized only by means of standard JavaScript. No server scripting or CGI programming is used. Therefore it works offline as well as in the web. (Nevertheless, we briefly describe how to realize a similar technique on the server side, see <A HREF="javaScript:parent.reDisplay('6',false)">corresponding chapter below</A>). </P>
+<H3>No reload</H3>
+<P>The ToC menu is downloaded as a whole when the user accesses the document the first time. After that, expanding and collapsing happens without any reload.</P>
+<H2>Functional features</H2>
+<H3>Automatic Collapse</H3>
+<P>At the first glance, the ToC menu behaves the same way as known from various standard software products such as Microsoft's Windows Explorer and HTML Help etc. or Apple's Macintosh Finder. But there is one difference: Expanding one part of our ToC menu causes that the other part just expanded before collapses automatically.</P>
+<H3>Synchronization</H3>
+<P>The hyperlinks that refer to another chapter or section of the document can easy be marked up so the ToC menu expands and collapses corresponding to how the user browses through the document. Click (<A HREF="javaScript:parent.reDisplay('4.2.4',false)">here</A>) to jump to the section explaining this technique and see how the outlook of the ToC menu changes. (click twice into the "Go Back"-button of your browser to come back to this section and synchronize the ToC menu again).</P>
+<H3>Heading Symbols</H3>
+<P>As you know from Microsoft's Windows Explorer or Apple's Macintosh Finder a heading is preceded either with one of two alternate symbols indicating its sub-headings are expanded or collapsed or with a third symbol indicating it doesn't have any sub-headings (i.e. is a leaf in the ToC hierarchy). </P>
+<H3>Hilighting</H3>
+<P>The current heading (i.e. the heading of the section just displayed in the content frame) is hilighted in the ToC menu (i.e. displayed in another color).</P>
+<H3>Ordering Strings</H3>
+<P>An ordering string such as "4.2.5", "IV.II.5", or "C.Appendix III.Section 2" must be assigned to each heading. You can decide if these ordering strings are visible in the ToC menu or not by simply setting an initial parameter true or false.</P>
+<H3>Automatic Scrolling</H3>
+<P>A scrolling mechanism ensures that the current heading (i.e. the heading of the section just displayed in the content frame) is always visible when the user expands the ToC menu so far that it exceeds the height of its frame.</P>
+<H1>How to Build</H1>
+<P>Although the ToC menu is realized by JavaScript you need almost no programming knowledge to build such menu for your own document. You can use the script provided here as a "black box". </P>
+<P>This section describes step by step, like a recipe, how to build up a ToC menu for a technical document so you can display it in a frameset beside of the document's content. First create a new folder (directory) that shall contain all ingredients.</P>
+<H2>The Ingredients</H2>
+<H3>The Original Document </H3>
+<P>Your original document may consist of one or more HTML files. We assume the following:</P>
+
+<UL>
+<LI>The sections of the document build a hierarchical structure. </LI>
+<LI>It's useful to start each section with a heading and precede this heading with an ordering number indicating its level and position within the hierarchy (see this document for an example). You must not necessarily display the headings and ordering numbers in the document itself but you must prepare them anyway for the ToC. </LI>
+<LI>Those sections you want to refer to from the ToC must be preceded with tags of the form &lt;A name="..."&gt;...&lt;/A&gt;. If you display the headings in the document itself you may enclose them by these tags.</LI></UL>
+
+<P>Later in this document we show how to generate the ordering numbers and &lt;A name="..."&gt; tags in a document in which the headings are pointed out by &lt;H...&gt;-tags according to their hierarchical order.</P>
+<H3>The ToC Table</H3>
+<P>Now you must provide all information needed for the ToC menu itself. You do it by building a text-file that contains the two-dimensional JavaScript array of which each element describes a ToC heading as described in the following sub-sections.</P>
+<P>You must not write the ToC table manually. You can easy generate it from the document as described in <A HREF="javaScript:parent.reDisplay('5',false)">chapter 5</A> </P>
+<P>Name the text-file "tocTab.js" and put it into new folder (directory).</P>
+<H4>The Entries</H4>
+<P>The first entry of the array "tocTab", tocTab[0], represents the document's title. The following entries represent the document's headings that shall appear in the ToC menu. Each entry is an array by itself and consists of three string elements:</P>
+
+<UL>
+<LI>The ordering string of the heading, </LI>
+<LI>The heading text (can be any valid text not containing double quote marks), and </LI>
+<LI>The anchor pointing to the document's section associated with the heading. You must define this anchor relatively to the frameset definition file, i.e., if the technical document is located in the same folder (directory), you need to specify the addresses in the form [file_name]#[section's A_tag_name].</LI></UL>
+
+<P>The ordering strings are most important as the function "displayToc" uses them to manage the expand/collapse mechanism. They are defined as usual: each of them is composed of so many dot-separated parts as given by the hierarchical level of the heading. Such ordering string clearly indicates the place of the heading in the ToC hierarchy. </P>
+<H4>Example</H4>
+<P>The following example shows the ToC table of the CSS1 document (as you can see, the ordering strings must not necessarily represent a decimal ordering system).</P>
+<P><FONT FACE="'Courier New',Courier" SIZE=2>var tocTab = new Array(); <BR>
+tocTab[0] = new Array ("0", "Cascading Style Sheets, level 1", "REC-CSS1.html#top"); <BR>
+... <BR>
+tocTab[21] = new Array ("4", "Formatting model", "REC-CSS1.html#formatting-model"); <BR>
+tocTab[22] = new Array ("4.1", "Block-level elements", "REC-CSS1.html#block-level-elements"); <BR>
+tocTab[23] = new Array ("4.1.1", "Vertical formatting", "REC-CSS1.html#vertical-formatting"); <BR>
+tocTab[24] = new Array ("4.1.2", "Horizontal formatting", "REC-CSS1.html#horizontal-formatting"); <BR>
+tocTab[25] = new Array ("4.1.3", "List-item elements", "REC-CSS1.html#list-item-elements"); <BR>
+tocTab[26] = new Array ("4.1.4", "Floating elements", "REC-CSS1.html#floating-elements"); <BR>
+tocTab[27] = new Array ("4.2", "Inline elements", "REC-CSS1.html#inline-elements"); <BR>
+... <BR>
+tocTab[102] = new Array ("10", "Appendices", "REC-CSS1.html#appendices"); <BR>
+tocTab[103] = new Array ("10.Appendix A:", "Sample style sheet for HTML 2.0", "REC-CSS1.html#appendix-a"); <BR>
+tocTab[104] = new Array ("10.Appendix B:", "CSS1 grammar", "REC-CSS1.html#appendix-b"); <BR>
+tocTab[105] = new Array ("10.Appendix C:", "Encoding", "REC-CSS1.html#appendix-c"); <BR>
+... <BR>
+var nCols = 3;</FONT> </P>
+<H4>Number of Hierarchical Levels </H4>
+<P>At the end of the array "tocTab" the maximum number of hierarchical levels of the ToC must be defined in a persistent variable named "nCols" (see the last line of the example before). As it's name indicates it defines a number of columns of a table. In fact, the function "displayToc" builds up a HTML table to do it's work (see <A HREF="javaScript:parent.reDisplay('4.2.1',false)">below</A> for more details).</P>
+<H3>Heading Symbols</H3>
+<P>Create (or copy from anywhere) three GIF-images of the size 13 x 12 pixels that shall precede the headings in the ToC and indicate their current state:</P>
+
+<UL>
+<LI>one image preceding collapsed headings you must name "plus.gif", </LI>
+<LI>the next one preceding expanded headings you must name "minus.gif", </LI>
+<LI>the third one preceding a leaf of the ToC hierarchy you must name "leaf.gif". </LI></UL>
+
+<P>Put these images into a sub-folder "Images" of the folder you just created before. </P>
+<H3>The Display Parameters</H3>
+<P>In order to define the appearance of the ToC (style, size and color of the fonts etc.) you must set some parameters. You must first copy the file "tocParas.js" into the folder you already created. Then open it with your editor and simply change some values of the JavaScript variable definitions. The meaning of each variable is explained there by a comment string. </P>
+<H3>The Behavior of the ToC Menu</H3>
+<P>Simply copy the file "displayToc.js" into the same folder that already contains the files "tocTab.js" and "tocParas.js" and the "Image"-sub-folder. This script describes the behavior of the ToC menu. You don't need to open it as long you don't want to change more then the ToC's appearance. </P>
+<H3>Blank HTML file</H3>
+<P>Finally, you need a HTML file that contains nothing (an empty body). Name it "blank.htm" and put it also into the folder just used before.</P>
+<H2>Preparation</H2>
+<P>Now you have all ingredients you need. If you did all right up to now, your folder looks as follows:</P>
+<FONT FACE="Courier New" SIZE=2><P>Images <BR>
+&nbsp;&nbsp;plus.gif <BR>
+&nbsp;&nbsp;minus.gif <BR>
+&nbsp;&nbsp;leaf.gif <BR>
+displayToc.js <BR>
+tocParas.js <BR>
+tocTab.js <BR>
+blank.htm</P>
+</FONT><P>The HTML files of the original document may or may not be contained in this folder. It's your choice where these documents are located. The main thing is that you defined the references in the ToC array relatively to this folder (see section <A HREF="javaScript:parent.reDisplay('3.1.2.1',false)">"The array 'tocTab'" above</A>). </P>
+<H2>Mixing Together</H2>
+<P>All what you still have to do is to mix the ingredients together.</P>
+<P>Simply define the following frameset and put it into the same folder as the other files.</P>
+<FONT FACE="'Courier New',Courier" SIZE=2><P>&lt;html&gt; <BR>
+&lt;head&gt; <BR>
+&lt;title&gt;[put here the title of your original document]&lt;/title&gt; <BR>
+&lt;script language="JavaScript" src="tocTab.js"&gt;&lt;/script&gt; <BR>
+&lt;script language="JavaScript" src="tocParas.js"&gt;&lt;/script&gt; <BR>
+&lt;script language="JavaScript" src="displayToc.js"&gt;&lt;/script&gt; <BR>
+&lt;/head&gt; <BR>
+&lt;frameset cols="200,*" border=0 onload="reDisplay('0',true)"&gt; <BR>
+&#9;&lt;frame src="blank.htm" name="toc"&gt; <BR>
+&#9;&lt;frame src="blank.htm" name="content"&gt; <BR>
+&lt;/frameset&gt; </P>
+</FONT><P>Notice the first parameter in the function call "reDisplay('0',true)". You must provide here the ordering string of the section that shall be displayed at first in the content frame i.e. normally the ordering string of the top section of the document.</P>
+<P>Open the frameset definition with your browser and (hopefully) all works as you expect.</P>
+<H1>How it works</H1>
+<H2>Overview</H2>
+<P>This chapter is addressed to those people who want to understand in detail how the mechanism functions. This understanding is, for example, necessary if you want to modify the mechanism's functionality more extensively as you can do by only changing the parameters defined in the script file "tocParas.js" (see <A HREF="javaScript:parent.reDisplay('3.1.4',false)">above</A>).</P>
+<H3>Basic Idea</H3>
+<P>The requirement of cross browser capability is essential for the decision on the techniques to be used here. There are more powerful and elegant techniques provided with Microsoft's DHTML Object Model (see section "DHTML, HTML &amp; CSS" of Microsoft's <A HREF="http://msdn.microsoft.com/workshop/">isdn online Web Workshop</A> for details). But these techniques are only supported by MS Internet Explorer.</P>
+<P>As the example of this document shows, the browser window is defined by a frameset document that arranges a ToC frame named "toc" on the left side and the content frame named "content" on the right side. </P>
+<P>The fact that both frames are first filled with a blank HTML file is pointing at the basic idea of our technique: The completion and later modification of the ToC frame on the left and the display of the required section of the content on the right side are completely accomplished by a JavaScript function defined with the frameset definition. It is named "displayToc".</P>
+<P>All information the function "displayToc" needs to do so is described in the array "tocTab" that is also persistently defined with the frameset definition. The array "tocTab" and the function "displayToc" are defined in separate files for the same function can be used for several documents without any change. </P>
+<H3>Initialization</H3>
+<P>During the opening process of the <A HREF="javaScript:parent.reDisplay('3.3',false)">frameset definition</A> the following files are loaded </P>
+
+<UL>
+<LI>the ToC (script file "tocTab.js") </LI>
+<LI>its display parameters (script file " tocParas.js") </LI>
+<LI>its behavior (script file "displayToc.js" containing the function "displayToc") </LI>
+<LI>the blank HTML file "blankToc.htm" twice in order to initialize both frames, "toc" and the "content" </LI></UL>
+
+<P>(See the above <A HREF="javaScript:parent.reDisplay('3.1',false)">section "The Ingredients"</A> for a detailed description of this files.)</P>
+<P>When the opening process is finished the "onload" event fires and calls the function "reDisplay" the first time. The function displays the initial headings (usually the top level headings) in the left frame and loads the document's content into the right frame.</P>
+<H3>User interaction</H3>
+<P>After the initialization the function "reDisplay" is called by the user's mouseclicks either on a heading of the ToC menu or on an internal hyperlink of the content (provided it has the appropriate HREF parameter). </P>
+<P>Wherever the user is clicking, the function displays the required section of the document by scrolling or loading it into the "content" frame and expands or collapses the ToC menu as required by re-writing the "toc" document.</P>
+<H2>The Details</H2>
+<P>In this section we explain in more details how the function works</P>
+<H3>Building a Table</H3>
+<P>In order to display the ToC menu accurately the function builds up a table. It starts with some heading rows at the top containing the document's title followed by the rows containing the headings. The number of columns is given by the maximum hierarchy level plus one (nCols+1).</P>
+<P>The rows containing the headings start with as many preceding cells as given by the heading's level, the last of them containing the heading symbol. If there are more than one preceding cells the remaining cells are empty (i.e. filled with a nonbreaking space sign "&amp;nbsp;"). This causes the different line indents that depend from different heading levels. </P>
+<P>The remaining part of the table row is used for the heading's text. If there are on the right hand of the cell containing heading symbol more than one column remaining free (i.e. if the level of the heading is smaller than the maximum level) the cells are united to one by a "colspan" parameter. </P>
+<H3>Expanding and Collapsing</H3>
+<P>The function re-writes the ToC menu each time the user clicks into one of its headings. It does so by inspecting all entries of the array "tocTab" one after the other in order to decide whether a heading represented by such entry (see <A HREF="javaScript:parent.reDisplay('3.1.2.1',false)">above</A>) has to be generated and displayed or not. </P>
+<P>For a better understanding of the script, please notice that the names of the input parameters that indicate the heading the user just clicked on as well as the local variables associated to this heading start with "current". The names of local variables that describe the heading the function inspects during working off the loop start with "this". </P>
+<P>The decision is based on the ordering string of the heading it just inspects (first element of the "tocTab" entry) and the function's input parameters. </P>
+<P>The function's input parameters are </P>
+
+<UL>
+<LI>"currentNumber", i.e. the ordering string of the current heading and </LI>
+<LI>"currentIsExpanded" that tells the function whether the current heading was expanded or not. </LI></UL>
+
+<P>The rules that underlie the decision whether a heading has to be generated and displayed or not are simple. As the result of clicking into a ToC heading, say the heading with the ordering number 3.1.2, the following headings must be visible: </P>
+
+<UL>
+<LI>The heading the user clicked on (the current heading 3.1.2). </LI>
+<LI>All headings that lead to it from the root of the ToC hierarchy, i.e. 3 and 3.1. They must be marked as expanded. </LI>
+<LI>The siblings of these headings, in our example: the siblings of 3, i.e. 1, 2, 4, ..., the siblings of 3.1, i.e. 3.2, 3.3 and the siblings of 3.1.2, i.e. 3.1.1, 3.1.3, 3.1.4, 3.1.5, 3.1.6. They must be marked as leaf or not expanded. </LI>
+<LI>If the current heading is no leaf and was not expanded it now must expand, i.e. its children 3.1.2.1, 3.1.2.2 and 3.1.2.3 must be visible too. In this case the current heading must be marked as expanded. Otherwise no further heading must be visible and the current heading must be marked as not expanded.</LI></UL>
+
+<P>Remember that an ordering string consists of one ore more parts separated by a dot and that the number of parts indicates the level of the heading in the ToC hierarchy (see above; by our convention the level is set to the number of parts minus one). Taking this into account you can realize that the above rules are equivalent with the following </P>
+
+<UL>
+<LI>The top headings (i.e. headings with thisLevel == 0) are always displayed. </LI>
+<LI>Otherwise (i.e. if thisLevel &gt; 0), only those headings are displayed of which the first parts of the ordering number match the corresponding parts of the ordering number of the current heading except the last one (i.e. the beginning of the value of "currentNumber"). This causes the display of all headings that connect the root of the ToC hierarchy with the current heading, their siblings and also the sub-headings of the current heading. </LI>
+<LI>If the current heading was already expanded (i.e. the value of "currentIsExpanded" is true) no headings with a higher level are displayed. </LI></UL>
+
+<H3>Setting Input Parameters</H3>
+<P>Each ToC heading that the function generates contain the input parameters "currentNumber" and "currentIsExpanded" for the function's next call when the user clicks on it. Here is a description how the function generates the parameters (following our conventions, the names of the local variables that are used for this purpose are called "thisNumber" and "thisIsExpanded" respectively): </P>
+<P>The function determines the value of "thisNumber" by simply picking it up from the entry of the ToC table that belongs to the heading to be displayed.</P>
+<P>It determines the value of "thisIsExpanded" by comparing the last part of the ordering string of a heading that it decided to display with the corresponding ordering string of the current heading. The equality of both parts indicate the heading lies on the path from the root to the current heading and therefore the value of "thisIsExpanded" has to be set to true and otherwise to false. If the heading is the current one "thisIsExpanded" is set to the opposite of its current value, i.e. not currentIsExpanded. </P>
+<P>These local variables are also used to decide which symbol has to precede the heading if it is no leaf in the ToC hierarchy tree (see <A HREF="javaScript:parent.reDisplay('3.1.3',false)">section "Heading Symbols"</A> above). </P>
+<H3>Internal Links and Synchronization</H3>
+<P>As already mentioned in <A HREF="javaScript:parent.reDisplay('2.2.2',false)">section 2.2.2</A> you can easy mark up the hyperlinks of the document that refer to another chapter or section so the ToC menu expands and collapses correspondingly to how the user browses through the document. In the HREF attribute of the corresponding &lt;A&gt;-tag, simply call the function "reDisplay" instead of referring to the URL. For example, the link you see in the preceding sentence is coded as follows</P>
+<P><nobr><FONT FACE="'Courier New',Courier" SIZE=2>&lt;a href="javaScript:parent.reDisplay('2.2.2',false)"&gt;section 2.2.2&lt;/a&gt;</nobr></P>
+</FONT><H1>Numbering and ToC Table Generation</H1>
+<H2>The Problem</H2>
+<P>Assume, originally there is only a HTML document the headings of which are defined by &lt;Hn&gt;-tags but have no ordering strings There are no name anchors in the headings so we cannot link them from anywhere. A ToC table is also missing. What to do if you want to publish this document with an expanding and collapsing ToC menu as described before? </P>
+<P>In this chapter we describe how to number the headings, how to provide them with the required name anchors and how to generate the ToC Table belonging to them automatically so we can easy publish the document this way. </P>
+<H2>This Document</H2>
+<P>In the directory that contains our example (<A HREF="javaScript:parent.reDisplay('1.3.1',false)">see above</A>) you'll find the subdirectory "Generate". It contains the version of this HTML document "OrigDoc.htm" that I have originally written with my HTML editor. The headings of it are not preceded by ordering strings or name anchors. Furthermore, there is no table of content anywhere. </P>
+<P>Instead of manually writing ordering numbers, anchors and the ToC table, I wrote a script doing the work. You'll find it in the file "generate.js". It causes that if you open "OrigDoc.htm" with Internet Explorer 4+ you don't get the document simply rendered. Instead, you get two windows, one containing a document's version the headings of which are preceded by ordering strings and attached by named anchors and the other containing the ToC table belonging to it.</P>
+<H2>How to Apply</H2>
+<P>You can apply the technique used here to any HTML document the headings of which are defined by &lt;Hn&gt;-tags (the only restriction is that they may not contain double quote marks). We'll briefly describe, like a recipe, how to proceed. But notice: <B>As this technique exploits some features of Microsoft's DHTML Object Model you must use Internet Explorer 4+ to run it.</B> Of course, once you generated the new document and it's ToC table and put it together into a frameset as described in <A HREF="javaScript:parent.reDisplay('3.3',false)">section 3.3</A> the user can read it with any browser that supports JavaScript (<A HREF="javaScript:parent.reDisplay('2.1.1',false)">see above</A>).</P>
+<P>If you want to understand how the technique works look at the script provided with "generate.js". If you are not familiar with<B> </B>Microsoft's DHTML Object Model visit the reference pages of Microsoft's <A HREF="http://msdn.microsoft.com/workshop/c-frame.htm">msdn online Web Workshop</A> to understand the features we exploit. </P>
+<H3>Step by Step</H3>
+<P>As mentioned before, all what the technique requires is a HTML document the headings of which are defined by &lt;Hn&gt;-tags and don't contain double quote marks. In the following we describe step by step how to proceed to get the headings numbered, to provide them with name anchors and to generate the ToC table:</P>
+<OL>
+
+<LI>Put your document into the same directory as the JavaScript file "generate.js".</LI>
+<LI>Put the line &lt;script language="JavaScript" src="generate.js"&gt;&lt;/script&gt; into the head of it. If there are already other scripts this one must be the first.</LI>
+<LI>Add the event handler <FONT FACE="'Courier New',Courier" SIZE=2>onload="genHeadNums();genTocTable('[finalDocName]');close()"</FONT> to the BODY-tag of your document and replace <FONT FACE="'Courier New',Courier" SIZE=2>[finalDocName]</FONT> by the name you finally want to use for your completed document (in our example "TocMenu.htm"). </LI>
+<LI>Open your document with Internet Explorer 4+. The preparations you made in the preceding steps cause that, instead of your original document, two new windows open, one containing your document with ordering numbers and anchors in the headings, the other containing the ToC table belonging to it. The location entry field of both windows contain "about:blank". If you are asked to close a window (it displays your original document) say "Ok".</LI>
+<LI>Open the source of each document with your text editor (do it by right-clicking anywhere into each window and choosing "View source" from the context menu).</LI>
+<LI>Save both source texts to the directory that contains the other ingredients you need <A HREF="javaScript:parent.reDisplay('3.3',false)">(see section 3.3)</A>. Use "Save as" and pay attention to the required naming conventions that are as follows: 
+<UL>
+<LI>For the new document you must use the same name by which you replaced <FONT face="'Courier New',Courier" size=2>[finalDocName]</FONT> in step 3. 
+<LI>For the source file containing the ToC table you must use "tocTab.js". </LI>
+</UL>
+</LI>
+<LI>Now use your standard browser to open the frameset definition file in the ingredients directory. You got it!</LI></OL>
+
+<H3>Handling of Existing Ordering Strings and Name Anchors</H3>
+<P>The JavaScript file "generate.js" used in the steps described before contains two functions for different tasks:</P>
+
+<UL>
+<LI>The function "genHeadNums" generates the ordering strings and anchors of the document's headings and returns the modified document in a new window. </LI>
+<LI>The function "genTocTable" generates the ToC table and returns it in another new window. </LI></UL>
+
+<P>You can use each of these functions separately for only performing one of the tasks by calling only one of them in the onload-handler of the &lt;BODY&gt;-tag of your document.</P>
+<P>Let's see how the function "genTocTable" works if there are already ordering strings and name anchors attached to the headings of the document and you want to generate the ToC table for it.</P>
+<P>In most cases you have to modify a little bit both the document and the function before.</P>
+<P>For example, you must ensure that the ordering strings of all headings you want to use for the ToC fulfill the conditions described in the sections <A HREF="javaScript:parent.reDisplay('2.2.5',false)">2.2.5</A> and <A HREF="javaScript:parent.reDisplay('3.1.2.1',false)">3.1.2.1</A> and the headings themselves don't contain double quote marks. Furthermore, you must ensure that the title text of the document is a heading too and that this heading is located at the first possible position of the document's body so it generates the first entry of the ToC table (i.e. <FONT FACE="'Courier New',Courier" SIZE=2>tocTab[0]</FONT>).</P>
+<P>The modifications you have to do in the function depend on how the headings can be identified and the way their ordering strings and name anchors are placed with them. As we, of course, cannot describe all possibilities that can occur we provide the following example that gives an idea how to proceed.</P>
+<P>For example, in the case of the CSS1 document mentioned <A HREF="javaScript:parent.reDisplay('1.1',false)">above</A> the headings are defined this way:</P>
+<P><nobr><FONT FACE="'Courier New',Courier" SIZE=2>&lt;H4&gt;&lt;A NAME="list-style"5.6.6 &amp;nbsp;&amp;nbsp; 'list-style'&lt;/A&gt;&lt;/H4&gt;</nobr></P>
+</FONT><P>In opposite to our own paper the anchor names differ from the ordering numbers so you must pick up them separately. To do so you can use <FONT FACE="'Courier New',Courier" SIZE=2>theTags[i].children[0].name</FONT> (if <FONT FACE="'Courier New',Courier" SIZE=2>theTags[i]</FONT> is a heading) and put it into the last place of each ToC line, instead of putting the ordering number there again. </P>
+<P>You can also copy the ToC already provided in the introductory section of the document and paste it into the body of e new HTML document. The headings there are designed this way: </P>
+<P><nobr><FONT FACE="'Courier New',Courier" SIZE=2>&lt;A HREF="#list-style"&gt;5.6.6 'list-style'&lt;/A&gt;</nobr></P>
+</FONT><P>If you apply the function to this document you can use the "anchors" collection instead of the "all" collection by saying <FONT FACE="'Courier New',Courier" SIZE=2>var&nbsp;theTags&nbsp;=&nbsp;document.anchors; </FONT>at its beginning. By doing so, you directly get an array of all heading objects so you can easy access the three strings you need to compose the ToC table's entries <FONT FACE="'Courier New',Courier" SIZE=2>tocTab[i]</FONT>, namely</P>
+
+<UL>
+<LI>the heading's texts by <FONT FACE="'Courier New',Courier" SIZE=2>theTags[i].innerText;</FONT>, </LI>
+<LI>its ordering strings by <FONT FACE="'Courier New',Courier" SIZE=2>theTags[i].innerText.split(" ")[0];</FONT>, </LI>
+<LI>its anchor point by <FONT FACE="'Courier New',Courier" SIZE=2>theTags[i].href;</FONT>. </LI></UL>
+
+<H1>Server version</H1>
+<H2>Motivation</H2>
+<P>There may be occasions where you must assume that the users of your Web pages don't use JavaScript for some reasons. For example, some people disable JavaScript in their browser as they are worried about security issues. There are, at least in Germany, some institutions that don't allow their employees, for this reason, to enable any component of their browser that interprets dynamic Web pages.</P>
+<P>In such a case you must realize the functionality of the expanding and collapsing ToC menu completely on your web server so the client gets pure HTML pages. In this section, we provide some brief hints how to use our technique for this purpose.</P>
+<H2>Basic Idea of how to Accomplish</H2>
+<P>The idea is to translate the function reDisplay, its static parameters and the ToC table (provided with the files displayToc.js, tocParas.js and tocTab.js) to the server scripting language you use, e.g. PHP, Allaire's ColdFusion, Microsoft's VBScript for IIS, or ExperTelligence's WebBase. Depending on the language you use you can do this more or less mechanically. If you, for example, use PHP and want to replace a &quot;document.write(...)&quot;-statement you can take the input parameter (which is a mix of HTML text fragments and variables concatenated by &quot;&nbsp;+&nbsp; signs&quot;) and replace the parts &quot;<FONT FACE="'Courier New',Courier" SIZE=2>+&nbsp;[variable]&nbsp;+</FONT>&quot; by &quot;<FONT FACE="'Courier New',Courier" SIZE=2>&lt;? echo $[variable] ?&gt;</FONT>&quot;.</P>
+<P>If your server page generates the ToC HTML page well so far you must realize the user interaction which the function reDisplay performs by preparing its next call in each ToC heading and determining the input parameters "thisNumber" and "thisIsExpanded" for this call. Instead of a function call you must put there a link to your server page and attach to it the values of the input parameters as query variables so, if you use PHP, each ToC heading looks like as follows:</P>
+<P><FONT FACE="'Courier New',Courier" SIZE=2>&lt;A HREF=[your URL]?currentNumber=&lt;? echo $thisNumber ?&gt;&amp;currentIsExpanded=&lt;? echo $thisIsExpanded ?&gt;&gt;[the heading]&lt;/A&gt;</P>
+</FONT><H1>Author's Statement</H1>
+<P>You may use the technique published in this paper as you want. You may copy the scripts provided here, modify them and use them for any purpose. The only condition is that if you publish web pages that use this technique you point to its author at a suitable place and don't remove the Author's Statement at the beginning of each script.</P>
+<P>If you publish web pages that use this technique it's your responsibility to handle possible bugs even if you didn't modify any script. I cannot promise any support.</P></BODY>
+</HTML>

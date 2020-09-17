@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>openWYSIWYG</title>
+		<link rel="stylesheet" href="docs/style.css" type="text/css">
+		
+		<!-- 
+			Include the WYSIWYG javascript files
+		-->
+		<script type="text/javascript" src="scripts/wysiwyg.js"></script>
+		<script type="text/javascript" src="scripts/wysiwyg-settings.js"></script>
+		<!-- 
+			Attach the editor on the textareas
+		-->
+		<script type="text/javascript">
+			// Use it to attach the editor to all textareas with full featured setup
+			//WYSIWYG.attach('all', full);
+			
+			// Use it to attach the editor directly to a defined textarea
+			WYSIWYG.attach('textarea1'); // default setup
+			//WYSIWYG.attach('textarea2', full); // full featured setup
+			//WYSIWYG.attach('textarea3', small); // small setup
+			
+			// Use it to display an iframes instead of a textareas
+			//WYSIWYG.display('all', full);  
+		</script>
+		
+	</head>
+<body>
+<form name="exampleForm" action="example.html" method="post">
+   <textarea id="textarea1" name="test1" style="width:560px;height:200px;"> hola </textarea>
+</form>						
+</body>
+</html>
