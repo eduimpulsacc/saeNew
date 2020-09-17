@@ -1,0 +1,1119 @@
+<?php require('../../../../../../util/header.inc');?>
+<?php 
+	$frmModo		=$_FRMMODO;
+	$institucion	=$_INSTIT;
+	$ano			=$_ANO;
+	$curso			=$_CURSO;
+	$alumno			=$_ALUMNO;
+	$apoderado		=$_APODERADO;
+	$pago			=$_PAGOS;
+?>
+<?php
+	if($frmModo!="ingresar"){
+		$qry="SELECT apoderado.*, tiene2.responsable FROM alumno INNER JOIN (apoderado INNER JOIN tiene2 ON apoderado.rut_apo = tiene2.rut_apo) ON alumno.rut_alumno = tiene2.rut_alumno WHERE (((apoderado.rut_apo)=".trim($apoderado)."))";
+
+		
+		$result =@pg_Exec($conn,$qry);
+		if (!$result) {
+			error('<B> ERROR :</b>Error al acceder a la BD. (1)</B>');
+		}else{
+			if (pg_numrows($result)!=0){
+				$fila = @pg_fetch_array($result,0);	
+				if (!$fila){
+					error('<B> ERROR :</b>Error al acceder a la BD. (2)</B>');
+					exit();
+				}
+			}
+		}
+	}
+?>
+<HTML>
+	<HEAD>
+		<LINK REL="STYLESHEET" HREF="../../../../../../util/td.css" TYPE="text/css">
+		<SCRIPT language="JavaScript" src="../../../../../../util/chkform.js"></SCRIPT>
+<?php if($frmModo=="modificar"){?>
+		<?php include('../../../../../../util/rpc.php3');?>
+		<SCRIPT language="JavaScript">
+			function valida(form){
+				if(!chkVacio(form.txtNOMBRE,'Ingresar NOMBRE del apoderado.')){
+					return false;
+				};
+
+				if(!alfaOnly(form.txtNOMBRE,'Se permiten sólo caracteres alfanuméricos en el campo NOMBRE.')){
+					return false;
+				};
+
+				if(!chkVacio(form.txtAPEPAT,'Ingresar APELLIDO PATERNO del Apoderado.')){
+					return false;
+				};
+
+				if(!alfaOnly(form.txtAPEPAT,'Se permiten sólo caracteres alfanuméricos en el campo APELLIDO PATERNO.')){
+					return false;
+				};
+
+				if(!chkVacio(form.txtAPEMAT,'Ingresar APELLIDO MATERNO del Apoderado.')){
+					return false;
+				};
+
+				if(!alfaOnly(form.txtAPEMAT,'Se permiten sólo caracteres alfanuméricos en el campo APELLIDO MATERNO.')){
+					return false;
+				};
+
+				if(!chkSelect(form.cmbRELACION,'Seleccionar RELACION con el Alumno.')){
+					return false;
+				};
+
+				if(!chkVacio(form.txtCALLE,'Ingresar CALLE.')){
+					return false;
+				};
+
+				if(form.txtTELEF.value!=''){
+					if(!phoneOnly(form.txtTELEF,'Se permiten sólo numeros telefónicos en el campo TELEFONO.')){
+						return false;
+					};
+				};
+
+				if(form.txtEMAIL.value!=''){
+					if(!isEmail(form.txtEMAIL,'Formato EMAIL incorrecto.')){
+						return false;
+					};
+				};
+/*
+						if(!chkSelect(f1.m1,'Seleccionar REGION.')){
+							return false;
+						};
+*/
+						if(!chkSelect(f2.m2,'Seleccionar PROVINCIA.')){
+							return false;
+						};
+
+						if(!chkSelect(f3.m3,'Seleccionar COMUNA.')){
+							return false;
+						};
+				return true;
+			}
+		</SCRIPT>
+<?php }?>
+<?php if($frmModo=="ingresar"){?>
+		<?php include('../../../../../../util/rpc.php3');?>
+		<SCRIPT language="JavaScript">
+			function valida(form){
+				if(!chkVacio(form.txtRUT,'Ingresar RUT.')){
+					return false;
+				};
+
+				if(!nroOnly(form.txtRUT,'Se permiten sólo numeros en el RUT.')){
+					return false;
+				};
+                                if(!nroOnly(form.txtDIGRUT,'Ingresar digito verificador del RUT.')){
+                                        return false;
+                                };
+                                if(!nroOnly(form.txtRUT,form.txtDIGRUT,' RUT inválido.')){
+                                        return false;
+                                };
+
+				if(!chkVacio(form.txtNOMBRE,'Ingresar NOMBRE del Apoderado.')){
+					return false;
+				};
+
+				if(!alfaOnly(form.txtNOMBRE,'Se permiten sólo caracteres alfanuméricos en el campo NOMBRE.')){
+					return false;
+				};
+
+				if(!chkVacio(form.txtAPEPAT,'Ingresar APELLIDO PATERNO del Apoderado.')){
+					return false;
+				};
+
+				if(!alfaOnly(form.txtAPEPAT,'Se permiten sólo caracteres alfanuméricos en el campo APELLIDO PATERNO.')){
+					return false;
+				};
+
+				if(!chkVacio(form.txtAPEMAT,'Ingresar APELLIDO MATERNO del Apoderado.')){
+					return false;
+				};
+
+				if(!alfaOnly(form.txtAPEMAT,'Se permiten sólo caracteres alfanuméricos en el campo APELLIDO MATERNO.')){
+					return false;
+				};
+
+				if(!chkSelect(form.cmbRELACION,'Seleccionar RELACION con el Alumno.')){
+					return false;
+				};
+
+				if(!chkVacio(form.txtCALLE,'Ingresar CALLE.')){
+					return false;
+				};
+
+				if(form.txtTELEF.value!=''){
+					if(!phoneOnly(form.txtTELEF,'Se permiten sólo números telefónicos en el campo TELEFONO.')){
+						return false;
+					};
+				};
+
+				if(form.txtEMAIL.value!=''){
+					if(!isEmail(form.txtEMAIL,'Formato EMAIL incorrecto.')){
+						return false;
+					};
+				};
+				return true;
+			}
+		</SCRIPT>
+<?php }?>
+	</HEAD>
+<BODY >
+	<?php echo tope("../../../../../../util/");?>
+	<FORM method=post name="frm" action="procesoApoderado.php3">
+	<INPUT TYPE="hidden" name=alumno value="<?php echo trim($alumno)?>">
+		<TABLE WIDTH=600 BORDER=0 CELLSPACING=0 CELLPADDING=0 align=center>
+			<TR height=15>
+				<TD>
+					<TABLE BORDER=0 CELLSPACING=1 CELLPADDING=1 height="100%">
+						<TR>
+							<TD align=left>
+								<FONT face="arial, geneva, helvetica" size=2>
+									<strong>INSTITUCION</strong>
+								</FONT>
+							</TD>
+							<TD>
+								<FONT face="arial, geneva, helvetica" size=2>
+									<strong>:</strong>
+								</FONT>
+							</TD>
+							<TD>
+								<FONT face="arial, geneva, helvetica" size=2>
+									<strong>
+										<?php
+											$qry="SELECT * FROM INSTITUCION WHERE RDB=".$institucion;
+											$result =@pg_Exec($conn,$qry);
+											if (!$result) {
+												error('<B> ERROR :</b>Error al acceder a la BD. (3)</B>');
+											}else{
+												if (pg_numrows($result)!=0){
+													$fila1 = @pg_fetch_array($result,0);	
+													if (!$fila1){
+														error('<B> ERROR :</b>Error al acceder a la BD. (4)</B>');
+														exit();
+													}
+													echo trim($fila1['nombre_instit']);
+												}
+											}
+										?>
+									</strong>
+								</FONT>
+							</TD>
+						</TR>
+						<TR>
+							<TD align=left>
+								<FONT face="arial, geneva, helvetica" size=2>
+									<strong>AÑO ESCOLAR</strong>
+								</FONT>
+							</TD>
+							<TD>
+								<FONT face="arial, geneva, helvetica" size=2>
+									<strong>:</strong>
+								</FONT>
+							</TD>
+							<TD>
+								<FONT face="arial, geneva, helvetica" size=2>
+									<strong>
+										<?php
+											$qry="SELECT * FROM ANO_ESCOLAR WHERE ID_ANO=".$ano;
+											$result =@pg_Exec($conn,$qry);
+											if (!$result) {
+												error('<B> ERROR :</b>Error al acceder a la BD. (5)</B>');
+											}else{
+												if (pg_numrows($result)!=0){
+													$fila1 = @pg_fetch_array($result,0);	
+													if (!$fila1){
+														error('<B> ERROR :</b>Error al acceder a la BD. (4)</B>');
+														exit();
+													}
+													echo trim($fila1['nro_ano']);
+												}
+											}
+										?>
+									</strong>
+								</FONT>
+							</TD>
+						</TR>
+						<TR>
+							<TD align=left>
+								<FONT face="arial, geneva, helvetica" size=2>
+									<strong>CURSO</strong>
+								</FONT>
+							</TD>
+							<TD>
+								<FONT face="arial, geneva, helvetica" size=2>
+									<strong>:</strong>
+								</FONT>
+							</TD>
+							<TD>
+								<FONT face="arial, geneva, helvetica" size=2>
+									<strong>
+										<?php
+											$qry="SELECT curso.grado_curso, curso.letra_curso, tipo_ensenanza.nombre_tipo, empleado.ape_mat, empleado.ape_pat, empleado.nombre_emp FROM (tipo_ensenanza INNER JOIN (curso INNER JOIN (empleado INNER JOIN supervisa ON empleado.rut_emp = supervisa.rut_emp) ON curso.id_curso = supervisa.id_curso) ON tipo_ensenanza.cod_tipo = curso.ensenanza) INNER JOIN ano_escolar ON curso.id_ano = ano_escolar.id_ano WHERE (((curso.id_curso)=".$curso."))";
+											$result =@pg_Exec($conn,$qry);
+											if (!$result) {
+												error('<B> ERROR :</b>Error al acceder a la BD. (5)</B>');
+											}else{
+												if (pg_numrows($result)!=0){
+													$fila1 = @pg_fetch_array($result,0);	
+													if (!$fila1){
+														error('<B> ERROR :</b>Error al acceder a la BD. (4)</B>');
+														exit();
+													}
+													echo trim($fila1['grado_curso'])."-".trim($fila1['letra_curso'])."    ".trim($fila1['nombre_tipo']);
+												}
+											}
+										?>
+									</strong>
+								</FONT>
+							</TD>
+						</TR>
+						<TR>
+							<TD align=left>
+								<FONT face="arial, geneva, helvetica" size=2>
+									<strong>ALUMNO</strong>
+								</FONT>
+							</TD>
+							<TD>
+								<FONT face="arial, geneva, helvetica" size=2>
+									<strong>:</strong>
+								</FONT>
+							</TD>
+							<TD>
+								<FONT face="arial, geneva, helvetica" size=2>
+									<strong>
+										<?php
+											$qry="SELECT * FROM ALUMNO WHERE RUT_ALUMNO='".trim($alumno)."'";
+											$result =@pg_Exec($conn,$qry);
+											if (!$result) {
+												error('<B> ERROR :</b>Error al acceder a la BD. (5)</B>');
+											}else{
+												if (pg_numrows($result)!=0){
+													$fila1 = @pg_fetch_array($result,0);	
+													if (!$fila1){
+														error('<B> ERROR :</b>Error al acceder a la BD. (4)</B>');
+														exit();
+													}
+													echo trim($fila1['ape_pat'])."-".trim($fila1['ape_mat'])." ".trim($fila1['nombre_alu']);
+												}
+											}
+										?>
+									</strong>
+								</FONT>
+							</TD>
+						</TR>
+					</TABLE>
+				</TD>
+			</TR>
+			<TR height=15>
+				<TD>
+					<TABLE WIDTH="100%" BORDER=0 CELLSPACING=5 CELLPADDING=5 height="100%">
+						<TR height="50" >
+							<TD align=right colspan=2>
+							<?php if($frmModo=="ingresar"){ ?>
+								<INPUT TYPE="submit" value="GUARDAR"   name=btnGuardar onclick="return valida(this.form);" >&nbsp;
+								<INPUT TYPE="button" value="CANCELAR" name=btnCancelar onClick=document.location="listarApoderado.php3">&nbsp;
+							<?php };?>
+							<?php if($frmModo=="mostrar"){ ?>
+								<?php if(($_PERFIL==14)||($_PERFIL==0)||($_PERFIL==1)){ ?>
+									<INPUT TYPE="button" value="MODIFICAR" name=btnModificar  onClick=document.location="seteaApoderado.php3?apoderado=<?php echo trim($apoderado)?>&caso=3">&nbsp;
+									<INPUT TYPE="button" value="ELIMINAR"  name=btnEliminar onClick=document.location="seteaApoderado.php3?caso=9;">&nbsp;
+								<?php }?>
+								<INPUT TYPE="button" value="ALUMNO" onClick=document.location="../alumno.php3">&nbsp;
+							<?php };?>
+							<?php if($frmModo=="modificar"){ ?>
+								<INPUT TYPE="submit" value="GUARDAR"   name=btnGuardar onclick="return valida(this.form);" >&nbsp;
+								<INPUT TYPE="button" value="CANCELAR" name=btnCancelar onclick=document.location="seteaApoderado.php3?apoderado=<?php echo trim($apoderado)?>&caso=1">&nbsp;
+							<?php };?>
+
+							</TD>
+						</TR>
+						<TR height=20 bgcolor=#0099cc>
+							<TD align=middle colspan=2>
+								<FONT face="arial, geneva, helvetica" size=2 color=White>
+									<strong>APODERADO</strong>
+								</FONT>
+							</TD>
+						</TR>
+						<TR>
+							<TD width=30></TD>
+							<TD>
+								<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 width=100%>
+									<TR>
+										<TD colspan=4>
+											<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+												<STRONG>RUT</STRONG>
+											</FONT>
+										</TD>
+									</TR>
+									<TR>
+										<TD valign=top>
+											<?php if($frmModo=="ingresar"){ ?>
+												<INPUT type="text" name=txtRUT size=10 maxlength=10 onchange="checkRutField(this);">
+											<?php };?>
+											<?php 
+												if($frmModo=="mostrar"){ 
+													imp($fila['rut_apo']);
+												};
+											?>
+											<?php 
+												if($frmModo=="modificar"){ 
+													imp($fila['rut_apo']);
+												};
+											?>
+										</TD>
+										<TD valign=top>&nbsp;-&nbsp;</TD>
+										<TD valign=top>
+											<?php if($frmModo=="ingresar"){ ?>
+												<INPUT type="text" name=txtDIGRUT size=1 maxlength=1 >
+											<?php };?>
+											<?php 
+												if($frmModo=="mostrar"){ 
+													imp($fila['dig_rut']);
+												};
+											?>
+											<?php 
+												if($frmModo=="modificar"){ 
+													imp($fila['dig_rut']);
+												};
+											?>
+										</TD>
+										<TD align=right width=90%>
+											<?php if($frmModo=="ingresar"){ ?>
+												<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=300>
+													<TR align=center>
+														<TD>
+															<INPUT TYPE="checkbox" NAME="chkRESP" value=1>
+															APODERADO
+														</TD>
+													</TR>
+												</TABLE>
+											<?php };?>
+											<?php 
+												if($frmModo=="mostrar"){ 
+													if($fila['responsable']==1){ 
+														imp("APODERADO RESPONSABLE");
+													};
+												};
+											?>
+											<?php 
+												if($frmModo=="modificar"){ ?>
+													<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=300>
+														<TR align=center>
+															<TD>
+																
+																<INPUT TYPE="checkbox" NAME="chkRESP" <?php if($fila['responsable']==1) echo "checked"?> value=1>
+																APODERADO
+															</TD>
+														</TR>
+													</TABLE>
+											<? };?>
+										</TD>
+									</TR>
+								</TABLE>
+							</TD>
+						</TR>
+						<TR>
+							<TD width=30></TD>
+							<TD>
+								<TABLE BORDER=0 CELLSPACING=2 CELLPADDING=0 width=100%>
+									<TR>
+										<TD>
+											<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+												<STRONG>NOMBRES</STRONG>
+											</FONT>
+										</TD>
+										<TD>
+											<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+												<STRONG>APELLIDO PATERNO</STRONG>
+											</FONT>
+										</TD>
+										<TD>
+											<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+												<STRONG>APELLIDO MATERNO</STRONG>
+											</FONT>
+										</TD>
+									</TR>
+									<TR>
+										<TD>
+											<?php if($frmModo=="ingresar"){ ?>
+												<INPUT type="text" name=txtNOMBRE size=25 maxlength=50>
+											<?php };?>
+											<?php 
+												if($frmModo=="mostrar"){ 
+													imp($fila['nombre_apo']);
+												};
+											?>
+											<?php if($frmModo=="modificar"){ ?>
+												<INPUT type="text" name=txtNOMBRE size=25 maxlength=50 value="<?php echo trim($fila['nombre_apo']);?>">
+											<?php };?>
+										</TD>
+										<TD>
+											<?php if($frmModo=="ingresar"){ ?>
+												<INPUT type="text" name=txtAPEPAT size=25 maxlength=50>
+											<?php };?>
+											<?php 
+												if($frmModo=="mostrar"){ 
+													imp($fila['ape_pat']);
+												};
+											?>
+											<?php if($frmModo=="modificar"){ ?>
+												<INPUT type="text" name=txtAPEPAT size=25 maxlength=50 value="<?php echo trim($fila['ape_pat']);?>">
+											<?php };?>
+										</TD>
+										<TD>
+											<?php if($frmModo=="ingresar"){ ?>
+												<INPUT type="text" name=txtAPEMAT size=25 maxlength=50>
+											<?php };?>
+											<?php 
+												if($frmModo=="mostrar"){ 
+													imp($fila['ape_mat']);
+												};
+											?>
+											<?php if($frmModo=="modificar"){ ?>
+												<INPUT type="text" name=txtAPEMAT size=25 maxlength=50 value="<?php echo trim($fila['ape_mat']);?>">
+											<?php };?>
+										</TD>
+									</TR>
+								</TABLE>
+							</TD>
+						</TR>
+						<TR>
+							<TD width=30></TD>
+							<TD align=left>
+								<TABLE bgcolor=White BORDER=0 CELLSPACING=2 CELLPADDING=0 width=100%>
+									<TR align=CENTER>
+										<TD>
+											<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+												<TR>
+													<TD>
+														<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+															<STRONG>TELEFONO</STRONG>
+														</FONT>
+													</TD>
+												</TR>
+												<TR>
+													<TD>
+														<?php if($frmModo=="ingresar"){ ?>
+															<INPUT type="text" name=txtTELEF size=20 maxlength=30>
+														<?php };?>
+														<?php 
+															if($frmModo=="mostrar"){ 
+																imp($fila['telefono']);
+															};
+														?>
+														<?php if($frmModo=="modificar"){ ?>
+															<INPUT type="text" name=txtTELEF size=20 maxlength=30 value="<?php echo trim($fila['telefono']);?>">
+														<?php };?>
+													</TD>
+												</TR>
+											</TABLE>
+										</TD>
+										<TD>
+											<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+												<TR>
+													<TD>
+														<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+															<STRONG>EMAIL</STRONG>
+														</FONT>
+													</TD>
+												</TR>
+												<TR>
+													<TD>
+														<?php if($frmModo=="ingresar"){ ?>
+															<INPUT type="text" name=txtEMAIL size=40 maxlength=50>
+														<?php };?>
+														<?php 
+															if($frmModo=="mostrar"){ 
+																imp($fila['email']);
+															};
+														?>
+														<?php if($frmModo=="modificar"){ ?>
+															<INPUT type="text" name=txtEMAIL size=40 maxlength=50 value="<?php echo trim($fila['email']);?>">
+														<?php };?>
+													</TD>
+												</TR>
+											</TABLE>
+										</TD>
+										<TD align=CENTER>
+											<TABLE BORDER=0 CELLSPACING=2 CELLPADDING=0 WIDTH=50%>
+												<TR>
+													<TD>
+														<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+															<STRONG>RELACION</STRONG>
+														</FONT>
+													</TD>
+												</TR>
+												<TR>
+													<TD>
+														<?php if($frmModo=="ingresar"){?>
+															<Select name="cmbRELACION" >
+																<option value=0 selected></option>
+																<option value=1 >Padre</option>
+																<option value=2 >Madre</option>
+																<option value=3 >Otro</option>
+															</Select>
+														<?php };?>
+														<?php 
+															if($frmModo=="mostrar"){ 
+																switch ($fila['relacion']) {
+																	 case 0:
+																		 imp('INDETERMINADO');
+																		 break;
+																	 case 1:
+																		 imp('Padre');
+																		 break;
+																	 case 2:
+																		 imp('Madre');
+																		 break;
+																	 case 3:
+																		 imp('Otro');
+																		 break;
+																 };
+															};
+														?>
+														<?php if($frmModo=="modificar"){ ?>
+															<Select name="cmbRELACION">
+																<option value=0></option>
+														<option value=1 <?php echo ($fila['relacion'])==1?"selected":"" ?>>Padre</option>
+														<option value=2 <?php echo ($fila['relacion'])==2?"selected":"" ?>>Madre</option>
+														<option value=3 <?php echo ($fila['relacion'])==3?"selected":"" ?>>Otro</option>
+															</Select>
+														<?php };?>
+
+													</TD>
+												</TR>
+											</TABLE>
+										</TD>
+												<td>
+<!---------------------------------------------------------------------------------------------------------->
+	<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+															<TR>
+																<TD>
+																	<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+																		<STRONG>DIA PAGO</STRONG>
+																	</FONT>
+																</TD>
+															</TR>
+															<TR>
+																<TD>
+					<?php
+						$qry="SELECT anxapoderado.fecha, institucion.rdb, anxapoderado.rut_apo FROM (anxapoderado INNER JOIN apoderado ON anxapoderado.rut_apo = apoderado.rut_apo) INNER JOIN institucion ON anxapoderado.rdb = institucion.rdb WHERE (((institucion.rdb)=".$_INSTIT.") AND ((anxapoderado.rut_apo)=".$_APODERADO."))";
+						$resultanx =@pg_Exec($conn,$qry);
+						if (@pg_numrows($resultanx)!=0){
+							$filaanx = @pg_fetch_array($resultanx,0);
+							$dia = $filaanx['fecha'];
+						}else
+							$dia =5;
+					?>																		
+
+																	<?php if($frmModo=="ingresar"){ ?>
+																		<Select name="cmbDIA">
+																			<option value=5 selected>Día 5</option>
+																			<option value=10 >Día 10</option>
+																			<option value=15 >Día 15</option>
+																			<option value=20 >Día 20</option>
+																			<option value=25 >Día 25</option>
+																		</Select>
+																	<?php };?>
+																	<?php if($frmModo=="mostrar"){ ?>
+																			<?if($dia==5) echo " Dia 5 "?>
+																			<?if($dia==10) echo " Dia 10 "?>
+																			<?if($dia==15) echo " Dia 15 "?>
+																			<?if($dia==20) echo " Dia 20 "?>
+																			<?if($dia==25) echo " Dia 25 "?>
+																	<?php };?>
+																	<?php if($frmModo=="modificar"){ ?>
+																		<Select name="cmbDIA">
+																			<option value=5 <?php if($dia==5) echo " selected "?>>Día 5</option>
+																			<option value=10 <?php if($dia==10) echo " selected "?>>Día 10</option>
+																			<option value=15 <?php if($dia==15) echo " selected "?>>Día 15</option>
+																			<option value=20 <?php if($dia==20) echo " selected "?>>Día 20</option>
+																			<option value=25 <?php if($dia==25) echo " selected "?>>Día 25</option>
+																		</Select>
+																	<?php };?>
+																</TD>
+															</TR>
+														</TABLE>
+<!------------------------------------------------------------------------------------------------------------>
+												</td>
+									</TR>
+								</TABLE>
+							</TD>
+						</TR>
+						<TR>
+							<TD width=30></TD>
+							<TD>
+								<TABLE width=520 bgcolor=#cccccc height=100 Border=0 cellpadding=1 cellspacing=0>
+									<TR>
+										<TD align=left height=10>
+											<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+												<STRONG>&nbsp;&nbsp;DIRECCION</STRONG>
+											</FONT>
+										</TD>
+									</TR>
+									<TR>
+										<TD>
+											<TABLE width=100% height=100% bgcolor=White BORDER=0>
+												<TR>
+													<TD>
+													<TR height="100%">
+													<TD width="4%"></TD>
+													<TD width="48%">
+													<TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0>
+														<TR>
+															<TD>
+																<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+																	<STRONG>CALLE</STRONG>
+																</FONT>
+															</TD>
+														</TR>
+														<TR>
+															<TD>
+																<?php if($frmModo=="ingresar"){ ?>
+																	<INPUT type="text" name=txtCALLE size=35 maxlength=50>
+																<?php };?>
+																<?php 
+																	if($frmModo=="mostrar"){ 
+																		imp($fila['calle']);
+																	};
+																?>
+																<?php if($frmModo=="modificar"){ ?>
+																	<INPUT type="text" name=txtCALLE size=35 maxlength=50 value="<?php echo trim($fila['calle'])?>" >
+																<?php };?>
+															</TD>
+														</TR>
+													</TABLE>
+													</TD><TD width="48%">
+													<TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0>
+														<TR>
+															<TD>
+																<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+																	<STRONG>NRO</STRONG>
+																</FONT>
+															</TD>
+														</TR>
+														<TR>
+															<TD>
+																<?php if($frmModo=="ingresar"){ ?>
+																	<INPUT type="text" name=txtNRO size=10 maxlength=5>
+																<?php };?>
+																<?php 
+																	if($frmModo=="mostrar"){ 
+																		imp($fila['nro']);
+																	};
+																?>
+																<?php if($frmModo=="modificar"){ ?>
+																	<INPUT type="text" name=txtNRO size=10 maxlength=5 value=<?php echo $fila['nro']?> >
+																<?php };?>
+															</TD>
+														</TR>
+													</TABLE>
+													</TD></TR>
+													<!--F7-->
+													<TR height="100%">
+													<TD width="4%"></TD>
+													<TD width="48%">
+													<TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0>
+														<TR>
+															<TD>
+																<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+																	<STRONG>DEPTO&nbsp;&nbsp;&nbsp;(OPCIONAL)</STRONG>
+																</FONT>
+															</TD>
+															<TD>
+																<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+																	<STRONG>BLOCK&nbsp;&nbsp;&nbsp;(OPCIONAL)</STRONG>
+																</FONT>
+															</TD>
+														</TR>
+														<TR>
+															<TD>
+																<?php if($frmModo=="ingresar"){ ?>
+																	<INPUT type="text" name=txtDEP size=12 maxlength=10>
+																<?php };?>
+																<?php 
+																	if($frmModo=="mostrar"){ 
+																		imp($fila['depto']);
+																	};
+																?>
+																<?php if($frmModo=="modificar"){ ?>
+																	<INPUT type="text" name=txtDEP size=12 maxlength=10 value="<?php echo $fila['depto']?>" >
+																<?php };?>
+															</TD>
+															<TD>
+																<?php if($frmModo=="ingresar"){ ?>
+																	<INPUT type="text" name=txtBLO size=12 maxlength=10>
+																<?php };?>
+																<?php 
+																	if($frmModo=="mostrar"){ 
+																		imp($fila['block']);
+																	};
+																?>
+																<?php if($frmModo=="modificar"){ ?>
+																	<INPUT type="text" name=txtBLO size=12 maxlength=10 value="<?php echo $fila['txtBLO']?>">
+																<?php };?>
+															</TD>
+														</TR>
+													</TABLE>
+													</TD>
+													<TD width="48%">
+													<TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0>
+														<TR>
+															<TD>
+																<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+																	<STRONG>VILLA/POBL&nbsp;&nbsp;&nbsp;(OPCIONAL)</STRONG>
+																</FONT>
+															</TD>
+														</TR>
+														<TR>
+															<TD>
+																<?php if($frmModo=="ingresar"){ ?>
+																	<INPUT type="text" name=txtVIL size=34 maxlength=50>
+																<?php };?>
+																<?php 
+																	if($frmModo=="mostrar"){ 
+																		imp($fila['villa']);
+																	};
+																?>
+																<?php if($frmModo=="modificar"){ ?>
+																	<INPUT type="text" name=txtVIL size=34 maxlength=50 value="<?php echo trim($fila['villa'])?>">
+																<?php };?>
+															</TD>
+														</TR>
+													</TABLE>
+													</TD>
+													</TR>
+
+													<?php if($frmModo=="modificar"){ ?>
+														<INPUT type="hidden" name=txtREG value=<?php echo $fila['region']?>>
+														<INPUT type="hidden" name=txtCIU value=<?php echo $fila['ciudad']?>>
+														<INPUT type="hidden" name=txtCOM value=<?php echo $fila['comuna']?>>
+													<?php }else{?>
+														<INPUT type="hidden" name=txtREG>
+														<INPUT type="hidden" name=txtCIU>
+														<INPUT type="hidden" name=txtCOM>
+													<?php }?>
+	</FORM>
+													<TR height="100%">
+														<TD width="4%"></TD>
+														<TD COLSPAN=2>
+															<TABLE width=100% height=100% bgcolor=White BORDER=0  CELLSPACING=0 CELLPADDING=0>
+																<TR>
+																	<TD>
+																		<TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0>
+																			<TR>
+																				<TD>
+																					<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+																						<STRONG>REGION</STRONG>
+																					</FONT>
+																				</TD>
+																			</TR>
+																			<TR>
+																				<TD>
+																					<?php if($frmModo=="ingresar"){ ?>
+<FORM method=post name=f1 onsubmit="return false;">
+	<SELECT class=saveHistory id=m1 name=m1 onchange="relate(this.form,0,this.selectedIndex);document.frm.txtREG.value=document.f1.m1.value;">
+	<?php
+		//SELECCIONAR TODAS LAS REGIONES
+		$qryREG		="SELECT * FROM REGION ORDER BY COD_REG ASC";
+		$resultREG	=@pg_Exec($connRPC,$qryREG);
+		for($i=0 ; $i < @pg_numrows($resultREG) ; $i++){
+			$filaREG = @pg_fetch_array($resultREG,$i);
+			echo "<OPTION value=\"".trim($filaREG['cod_reg'])."\">".trim($filaREG['nom_reg'])." </OPTION>\n";
+		}//for resultREG
+	?>
+	</SELECT>
+</FORM>
+
+																					<?php };?>
+																					<?php 
+																						if($frmModo=="mostrar"){ 
+																	$qryREG		="SELECT * FROM REGION WHERE COD_REG=".$fila['region'];
+																	$resultREG	=@pg_Exec($conn,$qryREG);
+																	$filaREG	= @pg_fetch_array($resultREG,0);
+																	imp($filaREG['nom_reg']);
+																						};
+																					?>
+			<?php if($frmModo=="modificar"){ ?>
+
+<FORM method=post name=f1 onsubmit="return false;">
+	<SELECT class=saveHistory id=m1 name=m1 onchange="relate(this.form,0,this.selectedIndex);document.frm.txtREG.value=document.f1.m1.value;">
+	<?php
+		//SELECCIONAR TODAS LAS REGIONES
+		$qryREG		="SELECT * FROM REGION ORDER BY COD_REG ASC";
+		$resultREG	=@pg_Exec($connRPC,$qryREG);
+		for($i=0 ; $i < @pg_numrows($resultREG) ; $i++){
+			$filaREG = @pg_fetch_array($resultREG,$i);
+			if($filaREG['cod_reg']==$fila['region'])
+				echo "<OPTION value=\"".trim($filaREG['cod_reg'])."\" selected>".trim($filaREG['nom_reg'])." </OPTION>\n";
+				else
+					echo "<OPTION value=\"".trim($filaREG['cod_reg'])."\">".trim($filaREG['nom_reg'])." </OPTION>\n";
+		}//for resultREG
+	?>
+	</SELECT>
+</FORM>
+
+			<?php };?>
+																				</TD>
+																			</TR>
+																		</TABLE>
+																	</TD>
+																	<TD>
+																		<TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0>
+																			<TR>
+																				<TD>
+																					<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+																						<STRONG>PROVINCIA</STRONG>
+																					</FONT>
+																				</TD>
+																			</TR>
+																			<TR>
+																				<TD>
+																					<?php if($frmModo=="ingresar"){ ?>
+<FORM method=post name=f2 onsubmit="return false;">
+	<SELECT class=saveHistory id=m2 name=m2 onchange="relate2(this.form,0,this.selectedIndex,0);document.frm.txtCIU.value=document.f2.m2.value;"> 
+	<?php
+		//SELECCIONAR TODAS LAS PROVINCIAS
+		$qryPRO		="SELECT * FROM PROVINCIA WHERE COD_REG=1 ORDER BY NOM_PRO ASC";
+		$resultPRO	=@pg_Exec($connRPC,$qryPRO);
+		for($i=0 ; $i < @pg_numrows($resultPRO) ; $i++){
+			$filaPRO = @pg_fetch_array($resultPRO,$i);
+			echo "<OPTION value=\"".trim($filaPRO['cor_pro'])."\">".trim($filaPRO['nom_pro'])." </OPTION>\n";
+		}//for resultPRO
+	?>
+	</SELECT>
+</FORM>
+
+																					<?php };?>
+																					<?php 
+																						if($frmModo=="mostrar"){ 
+										$qryPRO		="SELECT * FROM PROVINCIA WHERE COD_REG=".$fila['region']." AND COR_PRO=".$fila['ciudad'];
+										$resultPRO	=@pg_Exec($conn,$qryPRO);
+										$filaPRO	= @pg_fetch_array($resultPRO,0);
+										imp($filaPRO['nom_pro']);
+																						};
+																					?>
+<?php if($frmModo=="modificar"){ ?>
+	<!--INPUT type="text" name=txtCIU size=20 value=<?php echo $fila['ciudad']?>-->
+
+<FORM method=post name=f2 onsubmit="return false;">
+	<SELECT class=saveHistory id=m2 name=m2 onchange="relate2(this.form,0,this.selectedIndex,0);document.frm.txtCIU.value=document.f2.m2.value;"> 
+	<?php
+		//SELECCIONAR TODAS LAS PROVINCIAS
+		$qryPRO		="SELECT * FROM PROVINCIA WHERE COD_REG=".$fila['region']." ORDER BY NOM_PRO ASC";
+		$resultPRO	=@pg_Exec($connRPC,$qryPRO);
+		for($i=0 ; $i < @pg_numrows($resultPRO) ; $i++){
+			$filaPRO = @pg_fetch_array($resultPRO,$i);
+			if($filaPRO['cor_pro']==$fila['ciudad'])
+				echo "<OPTION value=\"".trim($filaPRO['cor_pro'])."\" selected>".trim($filaPRO['nom_pro'])." </OPTION>\n";
+				else
+					echo "<OPTION value=\"".trim($filaPRO['cor_pro'])."\">".trim($filaPRO['nom_pro'])." </OPTION>\n";
+		}//for resultPRO
+	?>
+	</SELECT>
+</FORM>
+
+
+<?php };?>
+																				</TD>
+																			</TR>
+																		</TABLE>
+																	</TD>
+																	<TD>
+																		<TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0>
+																			<TR>
+																				<TD>
+																					<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+																						<STRONG>COMUNA</STRONG>
+																					</FONT>
+																				</TD>
+																			</TR>
+																			<TR>
+																				<TD>
+																					<?php if($frmModo=="ingresar"){ ?>
+<FORM  method=post name=f3 onsubmit="return false;">
+	<SELECT class=saveHistory id=m3 name=m3 onchange="document.frm.txtCOM.value=document.f3.m3.value;"> 
+	<?php
+		//SELECCIONAR TODAS LAS COMUNAS
+		$qryCOM		="SELECT * FROM COMUNA WHERE COD_REG=1 AND COR_PRO=1 ORDER BY NOM_COM ASC";
+		$resultCOM	=@pg_Exec($connRPC,$qryCOM);
+		for($i=0 ; $i < @pg_numrows($resultCOM) ; $i++){
+			$filaCOM = @pg_fetch_array($resultCOM,$i);
+			echo "<OPTION value=\"".trim($filaCOM['cor_com'])."\">".trim($filaCOM['nom_com'])." </OPTION>\n";
+		}//for resultPRO
+	?>
+	</SELECT> 
+</FORM>
+																					<?php };?>
+																					<?php 
+																						if($frmModo=="mostrar"){ 
+			$qryCOM		="SELECT * FROM COMUNA WHERE COD_REG=".$fila['region']." AND COR_PRO=".$fila['ciudad']." AND COR_COM=".$fila['comuna'];
+			$resultCOM	=@pg_Exec($conn,$qryCOM);
+			$filaCOM	= @pg_fetch_array($resultCOM,0);
+			imp($filaCOM['nom_com']);
+																						};
+																					?>
+																					<?php if($frmModo=="modificar"){ ?>
+											<!--INPUT type="text" name=txtCOM size=20 value=<?php echo $fila['comuna']?>-->
+
+<FORM method=post name=f3 onsubmit="return false;">
+	<SELECT class=saveHistory id=m3 name=m3 onchange="document.frm.txtCOM.value=document.f3.m3.value;"> 
+	<?php
+		//SELECCIONAR TODAS LAS COMUNAS
+		$qryCOM		="SELECT * FROM COMUNA WHERE COD_REG=".$fila['region']." AND COR_PRO=".$fila['ciudad']." ORDER BY NOM_COM ASC";
+		$resultCOM	=@pg_Exec($connRPC,$qryCOM);
+		for($i=0 ; $i < @pg_numrows($resultCOM) ; $i++){
+			$filaCOM = @pg_fetch_array($resultCOM,$i);
+			if($filaCOM['cor_com']==$fila['comuna'])
+				echo "<OPTION value=\"".trim($filaCOM['cor_com'])."\" selected>".trim($filaCOM['nom_com'])." </OPTION>\n";
+				else
+					echo "<OPTION value=\"".trim($filaCOM['cor_com'])."\" >".trim($filaCOM['nom_com'])." </OPTION>\n";
+		}//for resultPRO
+	?>
+	</SELECT> 
+</FORM>
+
+																					<?php };?>
+																				</TD>
+																			</TR>
+																		</TABLE>
+																	</TD>
+																</TR>
+															</TABLE>
+														</TD>
+													</TR>
+													</TD>
+												</TR>
+											</TABLE>
+										</TD>
+									</TR>
+								</TABLE>						
+							</TD>
+						</TR>
+						<TR>
+							<TD colspan=4>
+								<TABLE WIDTH="100%" BORDER=0 CELLSPACING=0 CELLPADDING=0>
+									<TR>
+										<TD align=center>
+											<TABLE bgcolor=White BORDER=0 CELLSPACING=2 CELLPADDING=0 WIDTH=200>
+												<TR align=center>
+													<TD colspan=2>
+<!---------------------------------------------------------------------------------------------------------------->
+													</TD>
+												</TR>
+											</TABLE>
+										</TD>
+									</TR>
+								</TABLE>
+							</TD>
+						</TR>
+
+						<TR>
+							<TD colspan=4>
+								<TABLE WIDTH="100%" BORDER=0 CELLSPACING=0 CELLPADDING=0>
+									<TR>
+										<TD>
+											<HR width="100%" color=#0099cc>
+										</TD>
+									</TR>
+								</TABLE>
+							</TD>
+						</TR>
+						<TR height=15>
+							<TD width="100%" colspan=2>
+								<?php if($frmModo=="mostrar"){?>
+									<?php
+										echo "<INPUT TYPE=button value=FOTO onClick=window.open('frmFoto.php3?rut=",$apoderado,"','CodigoProducto','height=200,width=380,scrollbar=no,location=no,resizable=no')			
+										>";
+									?>
+									<INPUT TYPE="button" value="ACCESO WEB"  onClick=document.location="usuario/usuario.php3">
+									<!--INPUT TYPE="button" value="FICHA ALUMNO"  onClick=document.location="fichaAlumno.php3"-->
+								<?php }else{?>
+										<INPUT TYPE="button" value="FOTO" disabled>
+										<INPUT TYPE="button" value="ACCESO WEB" disabled>
+										<!--INPUT TYPE="button" value="FICHA ALUMNO" disabled-->
+								<?php }?>
+							</TD>
+						</TR>
+					</TABLE>
+				</TD>
+			</TR>
+			<?php if($frmModo=="ingresar"){?>
+				<tr>
+					<td colspan=3 align=center>
+						<table WIDTH="85%" CELLSPACING="0" CELLPADDING="1" bgcolor="#48d1cc">
+							<tr>
+								<td>
+									<table WIDTH="100%" BORDER="0" CELLSPACING="1" CELLPADDING="1" bgcolor=white>
+										<tr>
+											<td>
+												<font face="arial, geneva, helvetica" size="1" color=black>
+													<ul>
+														<li>Una vez finalizado el ingreso de la información presionar "GUARDAR" para grabar los datos, o bien "CANCELAR" para volver al listado de apoderados ingresados al sistema.</li>
+														<li>Para abandonar la sesión de usuario presionar "CERRAR SESSION".</li>
+													</ul>
+												</font>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			<?php }?>
+			<?php if($frmModo=="mostrar"){?>
+				<tr>
+					<td colspan=3 align=center>
+						<table WIDTH="85%" CELLSPACING="0" CELLPADDING="1" bgcolor="#48d1cc">
+							<tr>
+								<td>
+									<table WIDTH="100%" BORDER="0" CELLSPACING="1" CELLPADDING="1" bgcolor=white>
+										<tr>
+											<td>
+												<font face="arial, geneva, helvetica" size="1" color=black>
+													<ul>
+													<li>"ELIMINAR" : Elimina toda la información del apoderado ingresado</li>
+													<li>"LISTADO" : Despliega el total de apoderados ingresados ingresadas.</li>
+													<li>Para abandonar la sesión de usuario presionar "CERRAR SESSION".</li>
+													</ul>
+												</font>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			<?php }?>
+			<?php if($frmModo=="modificar"){?>
+				<tr>
+					<td colspan=3 align=center>
+						<table WIDTH="85%" CELLSPACING="0" CELLPADDING="1" bgcolor="#48d1cc">
+							<tr>
+								<td>
+									<table WIDTH="100%" BORDER="0" CELLSPACING="1" CELLPADDING="1" bgcolor=white>
+										<tr>
+											<td>
+												<font face="arial, geneva, helvetica" size="1" color=black>
+													<ul>
+														<li>Una vez finalizada la modificación de la información presionar "GUARDAR" para grabar los datos, o bien "CANCELAR" para no realizar modificaciones.</li>
+														<li>Para abandonar la sesión de usuario presionar "CERRAR SESSION".</li>
+													</ul>
+												</font>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			<?php }?>
+		</TABLE>
+</BODY>
+</HTML>

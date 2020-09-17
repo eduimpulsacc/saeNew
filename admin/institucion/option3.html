@@ -1,0 +1,83 @@
+<html>
+  <head>
+
+    <title>Passing data using Ajax and XML</title>
+
+    <script language = "javascript">
+
+      var options;
+
+      var XMLHttpRequestObject = false; 
+
+      if (window.XMLHttpRequest) {
+        XMLHttpRequestObject = new XMLHttpRequest();
+      } else if (window.ActiveXObject) {
+        XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+
+      function getoptions(scheme)
+      {
+        var url = "options3.php";
+
+        if(XMLHttpRequestObject) {
+          XMLHttpRequestObject.open("POST", url); 
+          XMLHttpRequestObject.setRequestHeader('Content-Type', 
+            'application/x-www-form-urlencoded'); 
+
+          XMLHttpRequestObject.onreadystatechange = function() 
+          { 
+            if (XMLHttpRequestObject.readyState == 4 && 
+              XMLHttpRequestObject.status == 200) {
+            var xmlDocument = XMLHttpRequestObject.responseXML;
+            options = xmlDocument.getElementsByTagName("option");
+            listoptions();
+            } 
+          } 
+
+          XMLHttpRequestObject.send("scheme=" + scheme); 
+
+        }
+      }
+
+      function listoptions ()
+      {
+        var loopIndex;
+        var selectControl = document.getElementById('optionList');
+
+        for (loopIndex = 0; loopIndex < options.length; loopIndex++ )
+        {
+            selectControl.options[loopIndex] = new 
+               Option(options[loopIndex].firstChild.data);
+        }
+    }
+    
+    function setoption()
+    {
+      document.getElementById('targetDiv').style.color = 
+        options[document.getElementById           
+          ('optionList').selectedIndex].firstChild.data;
+    }
+
+    </script>
+  </head>
+
+  <body>
+
+    <h1>Passing data using Ajax and XML</h1>
+
+    <form>
+        <select size="1" id="optionList" 
+          onchange="setoption()">
+          <option>Select a scheme</option>
+        </select>
+      <input type = "button" value = "Use color scheme 1" 
+        onclick = "getoptions('1')"> 
+      <input type = "button" value = "Use color scheme 2" 
+        onclick = "getoptions('2')"> 
+    </form>
+
+    <div id="targetDiv" width =100 height=100>Color this text.</div>
+
+  </body>
+
+</html>

@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+<TITLE>MOVER ENC. prueba 02</TITLE>
+<script language= "JavaScript">
+var ancho , alto , cCeldas , celdas , pasoH , pasoV;
+
+function iniciar(){
+//	celdas0 = document.getElementById("encCol").getElementsByTagName("td").length;
+//	celdas1 = document.getElementById("contenido").getElementsByTagName("td").length;
+
+	celdas0 = document.getElementById("filRell").getElementsByTagName( "td" ).length;
+	celdas1 = document.getElementById("encFil").getElementsByTagName( "td" ).length;
+
+	if(document.all) dif=0;	
+
+	for (j=0; j < celdas0; j++){
+		var anchoEnc = 0;
+		var anchoTab = 0;
+		
+		anchoEnc = document.getElementById( "encCol" ).getElementsByTagName( "td" ).item(j).offsetWidth;
+		anchoTab = document.getElementById( "filRell" ).getElementsByTagName( "td" ).item(j).offsetWidth;
+		
+		anchoCelda = (anchoTab > anchoEnc) ?  document.getElementById("filRell").getElementsByTagName( "td" ).item(j).offsetWidth : document.getElementById("encCol").getElementsByTagName( "td" ).item(j).offsetWidth;
+		
+		if(anchoCelda < 50) anchoCelda = 50; //ANCHO MÍNIMO DE CELDA px
+
+		contCeldas = document.getElementById( "filRell" ).getElementsByTagName( "td" ).item(j).innerHTML;
+		document.getElementById( "filRell" ).getElementsByTagName( "td" ).item(j).innerHTML = contCeldas+"<img style=\"height:0; width:"+anchoCelda+"px;\" class=\"rellH\">";
+		
+		contCeldas = document.getElementById( "encCol" ).getElementsByTagName( "td" ).item(j).innerHTML;
+		document.getElementById( "encCol" ).getElementsByTagName( "td" ).item(j).innerHTML ="<img style=\"height:0; width:"+(anchoCelda-dif)+"px;\" class=\"rellH\"><br>"+contCeldas;
+	}
+
+	document.getElementById("contenido").className = "tabla";
+
+	for (i=0; i < celdas1; i++){
+		var altoEnc = 0;
+		var altoTab = 0;
+		altoEnc = document.getElementById( "encFil" ).getElementsByTagName( "tr" ).item(i).getElementsByTagName( "td" ).item(0).offsetHeight;
+		altoTab = document.getElementById( "contenido" ).getElementsByTagName( "tr" ).item(i).getElementsByTagName( "td" ).item(0).offsetHeight;
+		
+		altoCelda = (altoTab > altoEnc)? document.getElementById( "contenido" ).getElementsByTagName( "tr" ).item(i).getElementsByTagName( "td" ).item(0).offsetHeight : document.getElementById( "encFil" ).getElementsByTagName( "tr" ).item(i).getElementsByTagName( "td" ).item(0).offsetHeight;
+		
+		document.getElementById( "contenido" ).getElementsByTagName( "tr" ).item(i).getElementsByTagName( "td" ).item(0).style.height = altoCelda+"px";
+		
+		document.getElementById( "encFil" ).getElementsByTagName( "td" ).item(i).style.height = altoCelda+"px";
+	}
+
+}
+
+function desplaza(){
+pasoH = document.getElementById("contenedor").scrollLeft;
+pasoV = document.getElementById("contenedor").scrollTop;
+document.getElementById("contEncCol").scrollLeft = pasoH;
+document.getElementById("contEncFil").scrollTop = pasoV;
+}
+
+</script>
+<style>
+/*table{border-collapse:collapse}*/
+
+#alfabetos{border-collapse:collapse; background:buttonface;}
+#alfabetos td{font:12px "arial" "helvetica" "sans-serif"; border:1px solid; text-align:center; vertical-align:top; }
+
+table td{font:12px monospace; border:1px solid; text-align:center; height:1.5em}
+#contEncCol{overflow:hidden; overflow-y:scroll; background:#ccc; width:20em}
+#contEncFil{overflow:hidden; overflow-x:scroll; background:#ccc; height:8em}
+#contenedor{overflow:auto; width:20em; height:8em}
+#contenido{}
+.tabla td{border:1px solid; width:7em}
+.rell{width:7em; height:0; position:relative; top:-1em; z-index:0; bor der:1px solid red}
+</style>
+</HEAD>
+<BODY onload=iniciar()>
+<h2>Tabla que desplaza encabezados con el contenido.</h2>
+
+<table id="alfabetos">
+<!--<table> -->
+<tr>
+<td>/</td>
+<td>
+<div id="contEncCol">
+ <!--table class="tabla" id="encCol"-->
+ <table id="encCol">
+ <tr>
+ <td> A </td><td> B </td><td> C </td><td> D </td>
+ </tr>
+ </table>
+</div>
+</td>
+</tr>
+
+<tr>
+<td>
+<div id="contEncFil">
+ <table Id="encFil">
+ <tr><td>1</td></tr>
+ <tr><td>2</td></tr>
+ <tr><td>3</td></tr>
+ <tr><td>4</td></tr>
+ <tr><td>5</td></tr>
+ <tr><td>6</td></tr>
+
+ <tr><td> <!-- FILA VACÍA --> </td></tr>
+
+ </table>
+</div>
+</td>
+<td>
+<div id="contenedor" onscroll="desplaza()">
+ <table class="tabla" id= "contenido">
+ <tr>
+ <td> alfa</td><td> bravo</td><td> charly</td><td> delta</td>
+ </tr>
+ <tr>
+ <td> eco</td><td> foxtrot</td><td> golf</td><td> hotel</td>
+ </tr>
+ <tr>
+ <td> indio</td><td> julieta</td><td> kilo</td><td> lima</td>
+ </tr>
+ <tr>
+ <td> mike</td><td> noviembre</td><td> oscar</td><td> papa</td>
+ </tr>
+ <tr>
+ <td> quebec</td><td> romeo</td><td> sierra</td><td> tango</td>
+ </tr>
+ <tr>
+ <td> uniforme</td><td> victor</td><td> whisky</td><td> x-ray</td>
+ </tr>
+
+ <tr id="filRell">
+ <td> <!-- FILA VACÍA --> </td><td> </td><td> </td><td> </td><td> </td>
+ </tr>
+
+ </table>
+</div>
+</td>
+</tr>
+</table>
+
+</BODY>
+</HTML>

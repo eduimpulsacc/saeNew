@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://wwwfs.mineduc.cl/Archivos/Schemas/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <sch:EntradaSemillaServicios>
+         <sch:ClienteId>243</sch:ClienteId>
+         <sch:ConvenioId>268</sch:ConvenioId>
+         <sch:ConvenioToken>eA2LqNKrjyZF</sch:ConvenioToken>
+      </sch:EntradaSemillaServicios>
+   </soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+<script language="JavaScript" src="scripts/utils.js"></script>
+<script>
+function ingresar_plani(){
+
+	var contenidos	=	document.getElementById('texto').value;
+	var queryString = "texto=" + contenidos;
+	if (confirm ("¿Lo confirma?")){
+		enviar_post("prueba_ajax.php", queryString, 'resultado_insert');
+		alert("enviado");
+	}
+	return false;
+}
+</script>
+
+</head>
+<body>
+	<form id="prueba" action="prueba_ajax.php" method="POST">
+		<label>
+			<textarea name="texto" id="texto" cols="80" rows="10" id="texto"></textarea>
+		</label>
+		<input type="button" value="Finalizar" onclick="ingresar_plani('resultado_insert');">
+		<input type="submit">
+
+	<div id="resultado_insert">
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+2004.07.05 16:34 B C:\windows\escritorio\coe 05-07-2004\admin\institucion\ano\fichas\datosEmergenciaAlumno.php <-- server up /opt/www/coe/admin/institucion/ano/fichas datosEmergenciaAlumno.php
+2004.07.05 16:34 B C:\windows\escritorio\coe 05-07-2004\admin\institucion\ano\fichas\listarAlumnosMatriculados.php3 <-- server up /opt/www/coe/admin/institucion/ano/fichas listarAlumnosMatriculados.php3
+2004.07.05 16:34 B C:\windows\escritorio\coe 05-07-2004\admin\institucion\ano\fichas\listarAlumnosMatriculados_OLD.php3 <-- server up /opt/www/coe/admin/institucion/ano/fichas listarAlumnosMatriculados_OLD.php3
+2004.07.05 18:18 B C:\windows\escritorio\coe 05-07-2004\admin\institucion\ano\fichas\datosEmergenciaAlumno.php --> 192.168.1.10 /var/www/html/coe_prueba/admin/institucion/ano/fichas datosEmergenciaAlumno.php
+2004.07.05 18:18 B C:\windows\escritorio\coe 05-07-2004\admin\institucion\ano\fichas\listarAlumnosMatriculados.php3 --> 192.168.1.10 /var/www/html/coe_prueba/admin/institucion/ano/fichas listarAlumnosMatriculados.php3
+2004.07.05 18:18 B C:\windows\escritorio\coe 05-07-2004\admin\institucion\ano\fichas\listarAlumnosMatriculados_OLD.php3 --> 192.168.1.10 /var/www/html/coe_prueba/admin/institucion/ano/fichas listarAlumnosMatriculados_OLD.php3

@@ -1,0 +1,127 @@
+.fondo {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	background-image:  url(cortes/gradient.jpg);
+	font-weight: bold;
+	text-align: left;
+	text-decoration: none;
+	text-indent: 5px;
+	color: #FF6600;
+	background-repeat: repeat-x;
+	height: 39px;
+
+
+
+
+
+}
+.datos {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	text-decoration: none;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #CCCCCC;
+	background-color: #FFFFFF;
+	height: 30px;
+	color: #666666;
+
+
+
+}
+
+.datosB {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	text-decoration: none;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #CCCCCC;
+	height: 30px;
+	color: #666666;
+
+
+
+}
+.boton01 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: bolder;
+	font-variant: normal;
+	text-transform: none;
+	color: #FFFFFF;
+	text-decoration: blink;
+	background-position: center center;
+	text-align: center;
+	border: 2px solid #CCCCCC;
+	background-image:  url(cortes/bottom.jpg);
+	list-style-position: inside;
+	list-style-type: disc;
+	display: marker;
+
+
+
+
+
+}
+.boton02 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: bold;
+	color: #666666;
+	text-decoration: none;
+
+}
+.tabla01 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+	background-color: #CCCCCC;
+	text-align: center;
+	vertical-align: middle;
+	height: 20px;
+	text-transform: none;
+	font-variant: small-caps;
+
+
+}
+.tabla02 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	font-variant: normal;
+	color: #666666;
+	text-decoration: none;
+	text-align: center;
+	height: 25px;
+
+}
+.imput {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	text-decoration: none;
+	background-color: #6699FF;
+	list-style-position: inside;
+	list-style-type: disc;
+	color: #FFFFFF;
+
+}
+.datosC {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: normal;
+	color: #FF6600;
+	text-decoration: none;
+	height: 25px;
+
+}

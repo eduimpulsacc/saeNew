@@ -1,0 +1,687 @@
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>jQuery UI Example Page</title>
+
+<link type="text/css" href="jquery-ui-1.8.6.custom.css" rel="stylesheet" />	
+<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="jquery-ui-1.8.6.custom.min.js"></script>
+
+
+<script type="text/javascript">
+
+	$(function() {
+		$( "#tabs" ).tabs();
+	});
+
+</script>
+
+
+<div class="tableindex" align="center" >ANOTACION</div>
+
+<div id="tabs" style="width:800px;margin:20px" align="center" >
+
+	<ul>
+		<li><a href="#codigo">codigo</a></li>
+		<li><a href="#seleccion">seleccion</a></li>
+		<li><a href="#tradicional">tradicional</a></li>
+		<li><a href="#masivo">masivo</a></li>
+	</ul>
+	
+	
+<div id="codigo" align="center" >
+
+<table>
+<tr>
+<td>
+<input class="botonXX" type="button" value="GUARDAR" name="btnGuardar" onClick="valida(this.form);" ><input class="botonXX"  TYPE="button" value="VOLVER" onClick="window.history.go(-1)">
+</td>                             
+</tr>							 
+<tr>
+<td nowrap="nowrap" >CODIGO DE ANOTACION </td>
+<td nowrap="nowrap" >
+<table nowrap="nowrap" border="0" align="left" cellpadding="3" cellspacing="0">
+<tr>
+<td><div align="center" >SIGLA</div></td>
+<td><div align="center"></div></td>
+<td><div align="center" >CODIGO</div></td>
+</tr>
+<tr>
+<td><label>
+<div align="center">
+<input name="sigla2" type="text" id="sigla2" size="4">
+<span >(*)</span></div>
+</label></td>
+<td><div align="center">-</div></td>
+<td><label>
+<div align="center">
+<input name="codigo2" type="text" id="codigo2" size="4">
+<span >(*)</span></div>
+</label></td>
+</tr>
+</table></td>
+<td nowrap="nowrap" ><label> <br>
+</label></td>
+</tr>
+<tr>
+<td nowrap="nowrap" >
+<font face="Geneva, Arial, Helvetica" color=#000000>NOMBRE RESPONSABLE</font></td>
+<td nowrap="nowrap" > 
+<?
+
+$q200 = "select DISTINCT empleado.rut_emp,empleado.nombre_emp,empleado.ape_pat 
+         from empleado,trabaja 
+		 where empleado.rut_emp = trabaja.rut_emp 
+		 and trabaja.rdb =".$institucion." 
+		 AND trabaja.rut_emp not in(7717287,11850353,4818331,14051464,13270730,16008794,
+		 13561508,14166024,10425397,13689507,5924397,11653768,12657018,8434778,7051273,16986896) ORDER BY empleado.nombre_emp ASC";
+
+									  //echo $q200;
+
+									  $r200 = pg_Exec($conn,$q200);
+									  $n200 = pg_numrows($r200);								 
+									 ?>
+									 
+	<select name="tipo_responsable2" id="tipo_responsable2">
+	<option value="0">Seleccione Responsable </option>
+	<?									
+    	$k = 0;
+		while ($k < $n200){
+		$f200 = pg_fetch_array($r200,$k);
+        $rut_emp = $f200['rut_emp'];
+		$nombre = $f200['nombre_emp'];
+		$ape=$f200['ape_pat'];
+			?>
+<option value="<?=$rut_emp ?>"><? echo "$nombre"." "."$ape"; ?></option>
+	<?
+		$k++;
+		}						  
+?>
+</select></td>
+</tr>
+<tr>
+<td nowrap="nowrap" >PERIODO</td>
+<td nowrap="nowrap" >
+<select id="cmb_periodos2" name="cmb_periodos2" class="ddlb_9_x Estilo2">
+<option value=0 selected>(Seleccione Periodo)</option>
+ <?
+	$sql = "SELECT id_periodo,nombre_periodo FROM periodo WHERE id_ano=".$ano;
+	$result_peri = @pg_exec($conn,$sql);
+	for($i=0 ; $i < @pg_numrows($result_peri) ; $i++)
+		{
+		$fila1 = @pg_fetch_array($result_peri,$i); 
+		 if ($fila1['id_periodo']==$cmb_periodos)
+	echo  "<option selected value=".$fila1["id_periodo"]." >".$fila1['nombre_periodo']."</option>";
+	else
+	echo  "<option value=".$fila1["id_periodo"]." >".$fila1['nombre_periodo']."</option>";
+ } ?>
+</select> 
+<span class="textosimple">(*)</span></td>
+	</tr>
+<tr>
+<td nowrap="nowrap" >FECHA</td>
+<td nowrap="nowrap" >
+<INPUT type="text" name="txtFECHA2" id="txtFECHA2" size="10" maxlength="10">
+<span class="textosimple">(*)</span>								    
+<br>
+<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+<STRONG>(DD-MM-AAAA)</STRONG></FONT>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap" >OBSERVACI&Oacute;N</td>
+<td nowrap="nowrap" >
+<textarea name="txtOBS2" cols="40" rows="5"></textarea>								  </td>
+</tr>
+								  
+<tr>
+<td colspan="2"><div align="center" class="Estilo13">(*) Datos obligatorios </div></td>
+</tr> 						  
+</table>
+</div> <!--PRIMER DIV-->
+
+
+
+<div id="seleccion">  <!--SEGUNDO DIV-->
+<table>
+<tr>
+<td>
+<input class="botonXX" type="button" value="GUARDAR" name="btnGuardar1" onClick="valida2(this.form);">
+<input class="botonXX"  TYPE="button" value="VOLVER" onClick="window.history.go(-1)">
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap" class="Estilo2">PERIODO</td>
+<td nowrap="nowrap" >
+	<select name="cmb_periodos3" id="cmb_periodos3" class="ddlb_9_x Estilo2">
+	<option value=0 selected>(Seleccione Periodo)</option>
+	<?
+	for($i=0 ; $i < @pg_numrows($result_peri) ; $i++)
+	{
+	$fila1 = @pg_fetch_array($result_peri,$i); 
+	
+	if ($fila1['id_periodo']==$cmb_periodos)
+	echo  "<option selected value=".$fila1["id_periodo"]." >".$fila1['nombre_periodo']."</option>";
+	else
+	echo  "<option value=".$fila1["id_periodo"]." >".$fila1['nombre_periodo']."</option>";
+	 } 	?>
+	</select> 
+	<span class="Estilo7">(*)</span>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap" class="Estilo3">SECTOR DE APRENDIZAJE </td>
+<td nowrap="nowrap" class="Estilo2">
+	<?
+	$q100 = "select * from sigla_subsectoraprendisaje where rdb = '$institucion' order by detalle";
+	$r100 = pg_Exec($conn,$q100);
+	$n100 = pg_numrows($r100);
+	?> 
+	 <select name="sigla_subsector" id="sigla_subsector">
+	 <option value="0">Seleccione Sector de Aprendizaje </option>
+	 <?
+	  $j = 0;
+	  while ($j < $n100){
+		$f100 = pg_fetch_array($r100,$j);
+		$sigla    = $f100['sigla'];
+		$detalle  = $f100['detalle'];
+		$id_sigla = $f100['id_sigla'];
+			?>
+	<option value="<?=$id_sigla ?>" 
+	<? if ($sigla_subsector==$id_sigla) { ?> selected="selected" <? } ?> 
+	 ><? echo "$detalle - $sigla"; ?></option>
+		<?
+			$j++;
+				}
+	 ?>									
+	 </select>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap" class="Estilo3">TIPO ANOTACION </td>
+<td nowrap="nowrap" class="Estilo2">
+	<?
+	$q200 = "select * from tipos_anotacion where rdb = '$institucion'";
+	$r200 = pg_Exec($conn,$q200);
+	$n200 = pg_numrows($r200);								 
+		 ?>
+	<select name="tipo_anotacion" onChange="enviapag3(this.form);" id="tipo_anotacion">
+	<option value="0">Seleccione Tipo de Anotaci&oacute;n </option>
+	<?									
+	$k = 0;
+	while ($k < $n200){
+		$f200 = pg_fetch_array($r200,$k);
+		$id_tipo = $f200['id_tipo'];
+		$codtipo = $f200['codtipo'];
+		$descripcion = $f200['descripcion'];
+			?>
+	<option value="<?=$id_tipo ?>" <? if ($tipo_anotacion==$id_tipo){ ?> selected="selected" <? }  ?> >
+	<? echo "$codtipo - $descripcion"; ?></option>
+		 <? $k++; }  ?>
+	</select>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap" class="Estilo3">NOMBRE RESPONSABLE </td>
+<td nowrap="nowrap" class="Estilo2">
+  <?
+  $q200 = "select distinct empleado.rut_emp,empleado.nombre_emp,empleado.ape_pat from empleado,trabaja 
+  where empleado.rut_emp = trabaja.rut_emp and trabaja.rdb =".$institucion." ORDER BY empleado.nombre_emp  ASC";
+		//if($_PERFIL==0) echo $q200;
+		$r200 = pg_Exec($conn,$q200);
+		$n200 = pg_numrows($r200);								 
+				 ?>
+	<select name="tipo_responsable" id="tipo_responsable">
+	<option value="0">Seleccione Responsable </option>
+		 <?									
+			$k = 0;
+			while ($k < $n200){
+				$f200 = pg_fetch_array($r200,$k);
+				$rut_emp = $f200['rut_emp'];
+				$nombre = $f200['nombre_emp'];
+				$ape=$f200['ape_pat'];
+					?>
+	<option value="<?=$rut_emp ?>"><? echo "$nombre"." "."$ape"; ?></option>
+		<? $k++; }  ?>
+	</select>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap" class="Estilo3">SUB TIPO </td>
+<td nowrap="nowrap" class="Estilo2">
+<?  
+    $q300 = "select * from detalle_anotaciones where id_tipo = '".trim($tipo_anotacion)."' order by 
+    codigo";
+	$r300 = @pg_Exec($conn,$q300);
+	$n300 = @pg_numrows($r300);
+	
+	?>
+<select name="detalle_anotaciones" id="detalle_anotaciones">
+	<option value="0">Seleccione Sub-Tipo de Anotaci&oacute;n</option>
+	<?							  
+		$l = 0;
+		while ($l < $n300){
+		$f300 = pg_fetch_array($r300,$l);
+		$codigosubtipo  = $f300['codigo'];
+		$detallesubtipo = $f300['detalle'];
+										   
+		if ($codigosubtipo!=NULL){
+			?>
+<option value="<?=$codigosubtipo ?>"><? echo "$codigosubtipo - $detallesubtipo"; ?></option>
+	<?   }	  $l++; }	 ?>	   
+ </select>
+</td>
+</tr>
+								  
+<tr>
+<td nowrap="nowrap" class="Estilo3">FECHA</td>
+<td nowrap="nowrap" class="Estilo2">
+<label>
+<INPUT type="text" name="txtFECHA3" id="txtFECHA3" size=10 maxlength=10>
+<span class="Estilo7">(*)</span>								    <br>
+<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+<STRONG>(DD-MM-AAAA)</STRONG></FONT></label>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap" class="Estilo3">OBSERVACI&Oacute;N</td>
+<td nowrap="nowrap" class="Estilo2">
+<textarea name="txtOBS3" cols="40" rows="5" id="txtOBS3"></textarea>
+</td>
+</tr>
+<tr>
+<td colspan="2"><div align="center" class="Estilo13">(*) Datos obligatorios </div></td>
+</tr>  
+</table>
+
+</div>  <!--SEGUNDO DIV-->
+	
+
+
+<div id="tradicional"> <!--TERCER DIV-->
+
+<table>  
+<tr>
+<td>
+<div>
+<input class="botonXX" type="button" value="GUARDAR"   name="btnGuardar3" onClick="valida4(this.form);" >
+<INPUT class="botonXX"  TYPE="button" value="VOLVER" onClick="window.history.go(-1)">
+</div>
+</td>
+</tr>
+<tr>
+<td><font face="Geneva, Arial, Helvetica" size=1 color=#000000>PERIODO</font></td>
+</tr>
+<tr>
+	<td>
+	<?
+	  if (($frmModo=="modificar") and ($_INSTIT == '8933')){ ?>
+	  <select name="cmb_periodos" class="ddlb_9_x" id="cmb_periodos">
+	  <option value=0 selected>(Seleccione Periodo)</option>
+	  <?
+	  for($i=0 ; $i < @pg_numrows($result_peri) ; $i++)
+	  {
+	  $fila1 = @pg_fetch_array($result_peri,$i); 
+	  if (($fila1['id_periodo'])==($fila['id_periodo']))
+	  echo  "<option selected value=".$fila1["id_periodo"]." >".$fila1['nombre_periodo']."</option>";
+	  else
+	  echo  "<option value=".$fila1["id_periodo"]." >".$fila1['nombre_periodo']."</option>";
+		} ?>
+	  </select>
+	<? }else{ ?>							  
+	  <select name="cmb_periodos" class="ddlb_9_x" id="cmb_periodos">
+	  <option value=0 selected>(Seleccione Periodo)</option>
+	  <?
+	  for($i=0 ; $i < @pg_numrows($result_peri) ; $i++)
+	  {
+	  $fila1 = @pg_fetch_array($result_peri,$i); 
+	  if ($fila1['id_periodo']==$cmb_periodos)
+	  echo  "<option selected value=".$fila1["id_periodo"]." >".$fila1['nombre_periodo']."</option>";
+	  else
+	  echo  "<option value=".$fila1["id_periodo"]." >".$fila1['nombre_periodo']."</option>";
+		} ?>
+	  </select>
+	<? } ?>
+	</td>
+</tr>
+
+
+<tr>
+<td>
+
+<TABLE nowrap="nowrap" <?php if($frmModo!="mostrar"){ echo "bgcolor=#cccccc";}?> >
+<TR>
+<TD>
+<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+<STRONG><?php if($frmModo!="mostrar"){ echo "&nbsp;&nbsp;";}?>TIPO ANOTACION</STRONG>											</FONT>
+</TD>
+</TR>
+<TR align=center>
+<TD>
+<TABLE nowrap="nowrap" >
+<TR>
+<?php if($frmModo!="mostrar"){ echo "<TD width=15></TD>";}?>
+<TD >
+<?php if($modo=="ingresar"){ ?>
+<input type="radio" value="1" name="rdTIPO" id="rdTIPO"  
+onClick="layerATRASO.style.visibility='hidden';layerTIPOCONDUCTA.style.visibility='visible';
+layerENFERMERIA.style.visibility='hidden';clean(this.form,'C');nro=1" <? if ($fila['tipo']==1){ ?> checked="checked" <? } ?>>
+<FONT face="arial, geneva, helvetica" size=2 color=black>
+<strong>CONDUCTA</strong></FONT>
+<input type="radio" value="2" name="rdTIPO" id="rdTIPO" 
+onClick="layerATRASO.style.visibility='visible'; layerTIPOCONDUCTA.style.visibility='hidden'
+layerENFERMERIA.style.visibility='hidden';clean(this.form,'A');nro=2" <? if ($fila['tipo']==2){ ?> checked="checked" <? } ?>>
+<FONT face="arial, geneva, helvetica" size=2 color=black>
+<strong>ATRASO</strong>
+</FONT>
+<input type="radio" value="4" name="rdTIPO" id="rdTIPO" 
+onClick="layerATRASO.style.visibility='hidden';layerTIPOCONDUCTA.style.visibility='hidden'
+layerATRASO.style.visibility='visible';layerENFERMERIA.style.visibility='visible';
+clean(this.form,'E');nro=4" <? if ($fila['tipo']==4){ ?> checked="checked" <? } ?>>
+<FONT face="arial, geneva, helvetica" size=2 color=black>
+<strong>RESPONSABILIDAD</strong></FONT>
+<?php };?>
+	<?php 
+	if($frmModo=="mostrar"){ 
+	switch ($fila['tipo']) {
+	case 0:
+	imp('Indeterminado');
+	break;
+	case 1:
+	imp('Conducta');
+	break;
+	case 2:
+	imp('Atraso');
+	break;
+	case 3:
+	imp('Inasistencia');
+	break;
+	case 4:
+	imp('Responsabilidad');
+	break;
+	};
+	};
+	?>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+<TR>
+<TD align=left>
+<TABLE>
+<TR>
+<TD nowrap="nowrap" valign=bottom>
+<TABLE>
+<TR>
+<TD>
+<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+<STRONG>FECHA</STRONG>
+</FONT>													
+</TD>
+</TR>
+<TR>
+<TD>
+<?php if($modo=="ingresar"){ ?>
+<INPUT type="text" name=txtFECHA size=10 maxlength=10 value="<? echo impF($fila['fecha']); ?>">
+<br>
+<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+<STRONG>(DD-MM-AAAA)</STRONG>
+</FONT>
+<?php };?>
+	<?php 
+	if($frmModo=="mostrar"){ 
+		impF($fila['fecha']);
+		};
+	?>	
+</TD>
+</TR>
+</TABLE>
+<table nowrap="nowrap" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td>
+<div id="layerTIPOCONDUCTA" style="visibility: <? if (($frmModo=="modificar") AND ($fila['tipo']==1)){ ?> true <? }else{ ?> hidden <? } ?>">
+<table nowrap="nowrap" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td><FONT face="arial, geneva, helvetica" size=1 color=#000000>TIPO CONDUCTA</FONT></td>
+</tr>
+<tr>
+<td><input name="tipo_conducta" type="radio" <?  if (($frmModo=='modificar') AND ($fila['tipo_conducta']==1)) { ?>  checked="checked" <? } ?> value="1" >
+POSITIVA
+<input name="tipo_conducta" type="radio" <?  if (($frmModo=='modificar') AND ($fila['tipo_conducta']==2)) { ?>  checked="checked" <? } ?> value="2" >
+NEGATIVA</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</TD>
+										
+<TD nowrap="nowrap" valign="top">
+<div id="layerATRASO" style="visibility: <? if (($frmModo=="modificar") AND ($fila['tipo'] > 1)){ ?>  true <? }else{ ?>  hidden <? } ?>">
+<TABLE>
+<TR>
+<TD>
+<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+<STRONG>TIEMPO ATRASO (atraso)<BR>HORA INGRESO 
+(enfermeria)</STRONG></FONT></TD>
+</TR>
+<TR>
+<TD>
+<?php if($modo=="ingresar"){ ?>
+<input name="txtHORAS2" type="text" size="4" maxlength="5" >
+<?php };?>
+<FONT face="arial, geneva, helvetica" size=1 color=#000000>
+<STRONG>(HH:MM)</STRONG></FONT></TD>
+</TR>
+</TABLE>
+</div></TD>
+</TR>
+</TABLE></TD>
+</TR>
+<TR>
+<TD align="left" class="textonergita">OBSERVACION<br>
+<textarea name="txtOBS" cols="60" rows="5"><? echo trim($fila['observacion']) ?></textarea></TD>
+</TR>
+<TR>
+<TD align=left>
+<div id="layerENFERMERIA" style="visibility:<? if (($frmModo=="modificar") AND ($fila['tipo']==4)){ ?> true <? }else{ ?> hidden <? } ?>">
+</div>
+</TD>
+</TR>
+</TABLE>
+
+</div> <!--TERCER DIV-->
+
+
+<div id="masivo"> <!--CUARTO DIV-->
+
+<br>
+	<table border="1" style="border-collapse:collapse">
+                              <tr>
+                                <td colspan="7" class="Estilo14">INGRESO MASIVO POR SELECCI&Oacute;N <br>
+                                  <input name="oculto" type="hidden" id="oculto" value="0"></td>
+                                </tr>
+                              <tr>
+                                <td width="134" class="Estilo3">FECHA</td>
+                                <td width="74" class="Estilo3">PER&Iacute;ODO</td>
+                                <td width="170" class="Estilo3">SECTOR APRENDIZAJE </td>
+                                <td width="109" class="Estilo3">RESPONSABLE</td>
+                               </tr>
+							<?
+							
+														
+							for ($iii=0; $iii < 10; $iii++){
+							    $txtFechadesde       = $_POST['txtFechadesde'.$iii];
+								$cmb_periodos        = $_POST['cmb_periodos'.$iii];
+								$sigla_subsector     = $_POST['sigla_subsector'.$iii];
+								$tipo_responsable    = $_POST['tipo_responsable'.$iii];
+								$tipo_responsable    = $_POST['tipo_responsable'.$iii];
+								$tipo_anotacion      = $_POST['tipo_anotacion'.$iii];
+								$detalle_anotaciones = $_POST['detalle_anotaciones'.$iii];
+								$observaciones       = $_POST['observaciones'.$iii];								
+	                            
+								?>															
+                                <tr>
+                                  <td>
+
+<input type="text" name="txtFechadesde<?=$iii?>" id="txtFechadesde<?=$iii?>" size="8" maxlength="10" readonly="true" class="ingreso" value="<?=$txtFechadesde?>" />
+
+<input name="button" type="button" class="botadd" id="txtFecha_btn<?=$iii?>" value="." /></td>
+
+<td>
+
+<select name="cmb_periodos<?=$iii?>" >
+<option value="0" selected="selected">...</option>
+                                    <?			
+									 for($i=0 ; $i < @pg_numrows($result_peri) ; $i++){
+										  $fila1 = @pg_fetch_array($result_peri,$i); 
+										  if ($fila1['id_periodo']==$cmb_periodos){
+											  echo  "<option selected value=".$fila1["id_periodo"]." ><font style='font-size:6px'>".substr($fila1['nombre_periodo'],0,10)."</font></option>";
+										  }else{
+											  echo  "<option value=".$fila1["id_periodo"]." ><font style='font-size:6px'>".substr($fila1['nombre_periodo'],0,10)."</font></option>";
+										  }	
+										  ?>
+                                    <? } ?>
+                                  </select></td>
+                                  <td>
+<?
+$q100 = "select * from sigla_subsectoraprendisaje where rdb = '$institucion' order by detalle";
+$r100 = pg_Exec($conn,$q100);
+$n100 = pg_numrows($r100);
+ ?>
+                                    <select name="sigla_subsector<?=$iii?>">
+                                      <option value="0">...</option>
+                                      <?							
+									  $j = 0;
+									  while ($j < $n100){
+									       $f100 = pg_fetch_array($r100,$j);
+										   $sigla    = $f100['sigla'];
+										   $detalle  = $f100['detalle'];
+										   $id_sigla = $f100['id_sigla'];
+										   ?>
+                                      <option value="<?=$id_sigla ?>" <? if ($sigla_subsector==$id_sigla){ ?> selected="selected" <? } ?> ><? echo substr($detalle,0,15);  ?></option>
+                                      <?
+										   $j++;
+									  }								  
+									  ?>
+                                    </select>
+                                  </td>
+                                  <td>
+								 <?
+								 /* $q200 = "select empleado.rut_emp,empleado.nombre_emp,empleado.ape_pat from empleado,trabaja where empleado.rut_emp = trabaja.rut_emp and trabaja.rdb =".$institucion;*/
+									 
+   $q200 = "select DISTINCT empleado.rut_emp,empleado.nombre_emp,empleado.ape_pat from empleado,trabaja   where empleado.rut_emp = trabaja.rut_emp and trabaja.rdb =".$institucion." AND trabaja.rut_emp not   
+in(7717287,11850353,4818331,14051464,13270730,16008794,13561508,14166024,10425397,13689507,5924397,11653768,8434778,7051273,16986896) ORDER BY empleado.ape_pat ASC";
+									 
+									  //echo $q200;
+									 
+									  $r200 = pg_Exec($conn,$q200);
+									  $n200 = pg_numrows($r200);								 
+									 ?>
+                                    <select name="tipo_responsable<?=$iii?>">
+                                      <option value="0">...</option>
+                                      <?									
+									  $k = 0;
+									  while ($k < $n200){
+									       $f200 = pg_fetch_array($r200,$k);
+                                           $rut_emp = $f200['rut_emp'];
+										   $nombre = $f200['nombre_emp'];
+										   $ape=$f200['ape_pat'];
+										   ?>
+                                      <option value="<?=$rut_emp ?>" <? if ($tipo_responsable==$rut_emp){ ?> selected="selected" <? } ?>><? echo substr($ape,0,10); echo substr($nombre,0,8); ?></option>
+                                      <?
+										   $k++;
+									  }								    
+								     ?>
+                                    </select></td>
+                              
+                                </tr>
+                                <tr>
+                                  <td><span class="Estilo3">TIPO ANOTACI&Oacute;N</span></td>
+                                  <td><span class="Estilo3">SUB-TIPO</span></td>
+                                  <td><span class="Estilo3">OBSERVACI&Oacute;N</span></td>
+                            
+                                </tr>
+                                <tr>
+                                <td><label>
+                                  <script type="text/javascript">
+									Calendar.setup({
+										inputField     :    "txtFechadesde<?=$iii?>",      // id of the input field
+										ifFormat       :    "%Y-%m-%d",  // format of the input field (even if hidden, this format will be honored)
+										button         :    "txtFecha_btn<?=$iii?>",  // trigger button (well, IMG in our case)
+										align          :    "Bl",           // alignment (defaults to "Bl")
+										singleClick    :    true,
+										mondayFirst	   :    true
+									});
+									</script>
+                                  <?									
+									  $q200 = "select * from tipos_anotacion where rdb = '$institucion'";
+									  $r200 = pg_Exec($conn,$q200);
+									  $n200 = pg_numrows($r200);								 
+									 ?>
+                                  <select name="tipo_anotacion<?=$iii?>" onchange="enviapag4(this.form);">
+                                    <option value="0">...</option>
+                                    <?								
+									  $k = 0;
+									  while ($k < $n200){
+									       $f200 = pg_fetch_array($r200,$k);
+                                           $id_tipo = $f200['id_tipo'];
+										   $codtipo = $f200['codtipo'];
+										   $descripcion = $f200['descripcion'];
+										   ?>
+                                    <option value="<?=$id_tipo ?>" <? if ($tipo_anotacion==$id_tipo){ ?> selected="selected" <? }  ?> ><? echo "$codtipo -"; echo substr($descripcion,0,15); ?></option>
+                                    <?
+										   $k++;
+									  }								    
+								      ?>
+                                  </select>
+</label></td>
+                                <td><label>
+                                  <?					
+									  $q300 = "select * from detalle_anotaciones where id_tipo = '".trim($tipo_anotacion)."' order by codigo";
+									  $r300 = @pg_Exec($conn,$q300);
+									  $n300 = @pg_numrows($r300);
+								    ?>
+                                  <select name="detalle_anotaciones<?=$iii?>">
+                                    <option value="0">...</option>
+                                    <?															  
+										  $l = 0;
+										  while ($l < $n300){
+											   $f300 = pg_fetch_array($r300,$l);
+											   $codigosubtipo  = $f300['codigo'];
+											   $detallesubtipo = $f300['detalle'];
+											   
+											   if ($codigosubtipo!=NULL){
+												   ?>
+                                    <option value="<?=$codigosubtipo?>" <? if ($detalle_anotaciones==$codigosubtipo){?> selected="selected" <? } ?>><? echo "$codigosubtipo -"; echo substr($detallesubtipo,0,15);  ?></option>
+                                    <?
+											   }	   
+											   $l++;
+										  }								
+									   ?>
+                                  </select>
+                                </label></td>
+                                <td><label>
+                                  <label></label>
+                                  <input name="observaciones<?=$iii?>" type="text" value="<?=$observaciones?>" size="10" /></td>
+                         
+                                </tr>
+                              <? } ?>
+                             
+                              <tr>
+                                <td colspan="7"><div align="center">
+                                  <label>
+                                  <input type="button" class="botonXX" name="Submit" value="GRABAR INFORMACI&Oacute;N" onClick="valida3(this.form);">
+                                  </label>
+                                <input class="botonXX"  type="button" value="CANCELAR" name="btnCancelar" onClick="window.history.go(-1)"></div></td>
+                                </tr>
+                            </table>
+</div>  <!--CUARTO DIV-->
+	
+	
+</div>
+
+</div><!-- End demo -->

@@ -1,0 +1,7 @@
+5	1728	0	110	1	A	2018	23740491	2	6.1	89	Art. 5º	P	1
+5	1728	0	110	1	A	2018	23823727	0	5.4	88	D° 107 art.único. Art. 5°. Reprueba por retraso significativo en las áreas de lectura y matematica	R	1
+5	1728	0	110	1	A	2018	23760585	3	6.6	89		P	1
+5	1728	0	110	1	A	2018	23910437	1	5.7	97		P	1
+5	1728	0	110	1	A	2018	23690794	5	6.7	88		P	1
+5	1728	0	110	1	A	2018	23882395	1	5.8	98	D°107 art. único.Art.5° Reprueba por retraso significativo en las áreas de lectura y matematica	R	1
+5	1728	0	110	1	A	2018	100341850	9	6.3	87		P	1

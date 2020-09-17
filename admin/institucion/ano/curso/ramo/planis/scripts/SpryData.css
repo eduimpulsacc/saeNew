@@ -1,0 +1,61 @@
+	.error {
+		padding: 4px;
+		text-align:center;
+		background-color:#F50000;
+	}
+	.loading {
+		padding: 4px;
+		text-align:center;
+		background-color: #FFFFCC;
+	}
+	.ready {
+		padding: 4px;
+	}
+	
+	.planis {
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 11px;
+		font-style: normal;
+		font-weight: normal;
+		color: #666666;
+		text-decoration: none;
+		background-color: #F9F8D9;
+		text-align: left;
+		text-indent: 0pt;
+	}
+	.titulo1{
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 13px;
+		font-weight: normal;
+		color: #666666;
+	}
+	.titulo2{
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		font-weight: normal;
+		color: #666666;
+	}
+	.texto1{
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 11px;
+		color: #666666;
+		font-weight: normal;
+	}
+	.texto2{
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 11px;
+		font-weight: normal;
+		color: #666666;
+	}
+	.texto3{
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 11px;
+	}
+	.hover {
+		cursor: pointer;
+		background-color: #FFFFCC !important;
+	}
+	.selected {
+		background-color: #CCCCCC;
+		font-weight: bold;
+	}

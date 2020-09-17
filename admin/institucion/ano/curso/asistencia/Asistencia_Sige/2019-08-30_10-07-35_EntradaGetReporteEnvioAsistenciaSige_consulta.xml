@@ -1,0 +1,10 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://dido.mineduc.cl/Archivos/Schemas/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <sch:EntradaGetReporteEnvioAsistenciaSige>
+         <sch:RBD>9121</sch:RBD>
+         <sch:CodigoEnvioAsistencia>20190830132635041890000000</sch:CodigoEnvioAsistencia>
+         <sch:Semilla>L7RsRtYE7JR2elFbzl33q7LAEen31Blw</sch:Semilla>
+      </sch:EntradaGetReporteEnvioAsistenciaSige>
+   </soapenv:Body>
+</soapenv:Envelope>

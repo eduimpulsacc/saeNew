@@ -1,0 +1,686 @@
+<script>
+function imprimir() 
+{
+	document.getElementById("capa0").style.display='none';
+	window.print();
+	document.getElementById("capa0").style.display='block';
+}
+</script>
+
+<?php require('../../../../util/header.inc');
+
+	setlocale("LC_ALL","es_ES");
+	$institucion	=$_INSTIT;
+	$ano			=$_ANO;
+	$mes 			= $cmb_meses;
+	$ensenanza		= $cmb_ensenanza;
+
+	if (empty($ensenanza)) exit;
+	
+	if ($mes == 1) $mes_pal = "Enero";
+	if ($mes == 2) $mes_pal = "Febrero";
+	if ($mes == 3) $mes_pal = "Marzo";
+	if ($mes == 4) $mes_pal = "Abril";
+	if ($mes == 5) $mes_pal = "Mayo";
+	if ($mes == 6) $mes_pal = "Junio";
+	if ($mes == 7) $mes_pal = "Julio";
+	if ($mes == 8) $mes_pal = "Agosto";
+	if ($mes == 9) $mes_pal = "Septiembre";
+	if ($mes == 10) $mes_pal = "Octubre";
+	if ($mes == 11) $mes_pal = "Noviembre";
+	if ($mes == 12) $mes_pal = "Diciembre";
+	$dia_1 = "01"; 	$dia_2 = "02"; 	$dia_3 = "03";  $dia_4 = "04";	
+	$dia_5 = "05";	$dia_6 = "06";	$dia_7 = "07";	$dia_8 = "08";	
+	$dia_9 = "09";	$dia_10 = "10";	$dia_11 = "11";	$dia_12 = "12";	
+	$dia_13 = "13";	$dia_14 = "14";	$dia_15 = "15";	$dia_16 = "16";	
+	$dia_17 = "17";	$dia_18 = "18";	$dia_19 = "19";	$dia_20 = "20";	
+	$dia_21 = "21";	$dia_22 = "22";	$dia_23 = "23";	$dia_24 = "24";	
+	$dia_25 = "25";	$dia_26 = "26";	$dia_27 = "27";	$dia_28 = "28";	
+	$dia_29 = "29";	$dia_30 = "30";	$dia_31 = "31";	
+	//---------------------------------------
+	$sql = "select * from institucion where rdb = " .$institucion;
+	$result01 =@pg_Exec($conn,$sql);
+	$fila01 = @pg_fetch_array($result01,0);	
+	$nombre_insti = $fila01['nombre_instit'] ;
+	//---------------------------------------
+	$sql = "select * from ensenanza where cod_tipo = " .$ensenanza;
+	$result01 =@pg_Exec($conn,$sql);
+	$fila01 = @pg_fetch_array($result01,0);	
+	$ensenanza_pal = $fila01['nombre_tipo'] ;
+	//---------------------------------------
+	$sql01 = "select nro_ano from ano_escolar where id_ano = " . $ano;
+	$result01 =@pg_Exec($conn,$sql01);
+	if (!$result01) 
+	{
+		error('<B> ERROR :</b>Error al acceder a la BD. (ANO ESCOLAR)</B>');
+	}
+	else
+	{
+	if (pg_numrows($result01)!=0)
+	{//En caso de estar el arreglo vacio.
+		$fila01 = @pg_fetch_array($result01,0);	
+		if (!$fila01)
+		{
+			error('<B> ERROR :</b>Error al acceder a la BD. (ANO ESCOLAR)</B>');
+			exit();
+		}
+	}
+	}
+	$nro_ano = $fila01['nro_ano'];
+	//-----------------------
+	$sql = "select * from curso where ensenanza = ".$ensenanza." and id_ano = ".$ano." order by grado_curso, letra_curso";
+	//-----------------------
+	$result =@pg_Exec($conn,$sql);
+	if (!$result) 
+	{
+		error('<B> ERROR :</b>Error al acceder a la BD. (CURSOS)</B>');
+	}
+	else
+	{
+	if (pg_numrows($result)!=0)
+	{//En caso de estar el arreglo vacio.
+		$fila = @pg_fetch_array($result,0);	
+		if (!$fila)
+		{
+			error('<B> ERROR :</b>Error al acceder a la BD. (CURSOS)</B>');
+			exit();
+		}
+	}
+	}
+	//-----------------------
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Asistencias</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="../../../../util/objeto.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+<!--
+.Estilo2 {font-family: Verdana, Arial, Helvetica, sans-serif}
+.Estilo4 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 9px;
+}
+.Estilo6 {font-size: 9px}
+.Estilo11 {font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; font-size: 12px; }
+.Estilo12 {font-weight: bold; font-size: 10px;}
+-->
+</style>
+</head>
+
+<body>
+<center>
+<table width="819" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="839"><table width="827" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="827"><div id="capa0">
+		  <div align="right">
+		      <input name="button3" TYPE="button" class="botonX" onclick="imprimir();" onmouseover=this.style.background='FFFFD7';this.style.color='003b85' onmouseout=this.style.background='#5c6fa9';this.style.color='ffffff' value="IMPRIMIR">	
+		    </div>
+        </div></td>
+      </tr>
+    </table>
+	<table width="826" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><div align="center" class="Estilo2">
+      <div align="left"><strong><? echo $nombre_insti; ?></strong></div>
+    </div></td>
+  </tr>
+  <tr>
+    <td><span class="Estilo11">Asistencia <span class="Estilo2"><strong><? echo trim(strtoupper($ensenanza_pal))?></strong></span></span></td>
+  </tr>
+  <tr>
+    <td width="816"><div align="center" class="Estilo2"><strong>ASISTENCIA</strong></div></td>
+  </tr>
+  <tr>
+    <td><div align="center" class="Estilo2"><strong><? echo trim(strtoupper($mes_pal . " " . $nro_ano)) ;?></strong></div></td>
+  </tr>
+  <tr>
+    <td><div align="center" class="Estilo2"></div></td>
+  </tr>
+   <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>	
+<table width="827" border="1" cellpadding="0" cellspacing="0">
+<? 
+  $cadena4 = "";
+  for($YYY=0 ; $YYY < 31 ; $YYY++)
+  {
+  	$dia_num = $YYY+1;
+	if (FechaValida($mes,$dia_num,$nro_ano, $ano))
+		$cadena4 = $cadena4 . ";" . $dia_num;
+	else
+		$cadena4 = $cadena4 . ";" . ".";
+	}
+	$dias_semana = explode(";",$cadena4);
+	$cadena5 = "";
+  for($YYYY=0 ; $YYYY < 31 ; $YYYY++)
+  {
+  	$dia_num = $YYYY+1;
+	$fecha = mktime(0,0,0,$mes,$dia_num,$nro_ano);
+	$dia_pal = strftime("%a",$fecha);
+	//if (checkdate($mes, $dia_1, $nro_ano) and ($dia_pal <> "sáb" and $dia_pal <> "dom" )) 
+	if (FechaValida($mes,$dia_num,$nro_ano, $ano))
+		$cadena5 = $cadena5 . ";" . strtoupper(substr($dia_pal,0,1));
+	else
+	//else
+		$cadena5 = $cadena5 . ";" . ".";
+	}
+	$dias_letra = explode(";",$cadena5);
+		?> 
+  <tr>
+    <td width="78"><div align="center"><span class="Estilo4"><? echo $mes_pal ?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[1];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[2];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[3];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[4];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[5];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[6];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[7];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[8];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[9];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[10];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[11];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[12];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[13];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[14];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[15];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[16];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[17];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[18];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[19];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[20];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[21];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[22];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[23];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[24];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[25];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[26];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[27];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[28];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[29];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[30];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_semana[31];?></span></div></td>
+    <td width="37"><span class="Estilo4">TOTAL</span></div></td>
+    <td width="51"><span class="Estilo4">% ASIS</span></div></td>
+    </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[1];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[2];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[3];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[4];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[5];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[6];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[7];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[8];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[9];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[10];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[11];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[12];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[13];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[14];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[15];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[16];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[17];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[18];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[19];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[20];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[21];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[22];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[23];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[24];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[25];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[26];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[27];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[28];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[29];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[30];?></span></div></td>
+    <td><div align="center"><span class="Estilo4"><? echo $dias_letra[31];?></span></div></td>	
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+   <?
+  for($i=0 ; $i < @pg_numrows($result) ; $i++)
+  {
+		$fila = @pg_fetch_array($result,$i);
+		$id_curso = $fila["id_curso"]
+  ?>
+  <tr>
+    <td><div align="left"><span class="Estilo4">
+	<? 
+		//-----------------------------------------
+		$Curso_pal = CursoPalabra($id_curso, 3, $conn);
+		echo $Curso_pal ;
+		//----------------------------------------
+	?>
+	</span></div></td>
+	<td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+  <? 
+	$cadena="";
+	$total_mat=0;
+	for($Y=0 ; $Y < 31 ; $Y++)
+  	{
+		$dia = $Y+1;
+		if (($Y+1)<10) 
+			$dia = "0".($Y+1);
+		//-------------------
+		$qry ="";
+		$qry = $qry . "select count(*) as cantidad from matricula where id_curso = ".$id_curso;
+		$qry = $qry . " and fecha <= '".$mes."-".$dia."-".$nro_ano."' and bool_ar = 0";
+		$fecha = mktime(0,0,0,$mes,$dia,$nro_ano);
+		$dia_pal = strftime("%a",$fecha);
+		if (FechaValida($mes,$dia,$nro_ano, $ano))
+		{
+			$result02 =@pg_Exec($conn,$qry);
+			$matricula = @pg_fetch_array($result02,0);	
+			$total_mat = $total_mat + $matricula['cantidad']; 
+			$cadena = $cadena . ";" . $matricula['cantidad']; 
+		}
+		else
+			$cadena = $cadena . ";" . ".";
+		}
+		$matricula_a = explode(";",$cadena);
+	//------------
+	// Inasistencias
+	//------------
+	$cadena="";
+	$cadena2="";
+	$Y=0;
+	$cont = 1;
+	$total_asis = 0;
+	$total_ause = 0;
+	for($Y=0 ; $Y < 31 ; $Y++)
+  	{
+		$dia = $Y+1;
+		if (($Y+1)<10) 
+			$dia = "0".($Y+1);
+		//-------------------
+		$qry ="";
+		$qry = $qry . "select count(*) as cantidad from asistencia where id_curso = ".$id_curso;
+		$qry = $qry . " and fecha = '".$mes."-".$dia."-".$nro_ano."'";
+		$fecha	 = mktime(0,0,0,$mes,$dia,$nro_ano);
+		$dia_pal = strftime("%a",$fecha);
+		if (FechaValida($mes,$dia,$nro_ano, $ano))
+		{
+			$result02 =@pg_Exec($conn,$qry);
+			$inasistentes = @pg_fetch_array($result02,0);
+			$asistentes = ($matricula_a[$cont] - $inasistentes['cantidad']);
+			$cadena2 = 	$cadena2 . ";" . $asistentes;
+			$cadena = $cadena . ";" . $inasistentes['cantidad']; 
+			$total_asis = $total_asis + $asistentes; 
+			$total_ause = $total_ause + $inasistentes['cantidad']; 
+		}
+		else
+		{
+			$cadena = $cadena . ";" . ".";
+			$cadena2 = $cadena2 . ";" . ".";			
+		}
+		$cont=$cont+1;
+	}
+	$inasistentes_a = explode(";",$cadena);
+	$asistentes_a = explode(";",$cadena2);
+	?>
+    <td><div align="left"><span class="Estilo4">Asistencia</span></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[1]; $asis1 = $asis1 + $asistentes_a[1];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[2]; $asis2 = $asis2 + $asistentes_a[2];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[3]; $asis3 = $asis3 + $asistentes_a[3];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[4]; $asis4 = $asis4 + $asistentes_a[4];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[5]; $asis5 = $asis5 + $asistentes_a[5];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[6]; $asis6 = $asis6 + $asistentes_a[6];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[7]; $asis7 = $asis7 + $asistentes_a[7];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[8]; $asis8 = $asis8 + $asistentes_a[8];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[9]; $asis9 = $asis9 + $asistentes_a[9];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[10]; $asis10 = $asis10 + $asistentes_a[10];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[11]; $asis11 = $asis11 + $asistentes_a[11];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[12]; $asis12 = $asis12 + $asistentes_a[12];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[13]; $asis13 = $asis13 + $asistentes_a[13];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[14]; $asis14 = $asis14 + $asistentes_a[14];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[15]; $asis15 = $asis15 + $asistentes_a[15];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[16]; $asis16 = $asis16 + $asistentes_a[16];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[17]; $asis17 = $asis17 + $asistentes_a[17];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[18]; $asis18 = $asis18 + $asistentes_a[18];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[19]; $asis19 = $asis19 + $asistentes_a[19];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[20]; $asis20 = $asis20 + $asistentes_a[20];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[21]; $asis21 = $asis21 + $asistentes_a[21];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[22]; $asis22 = $asis22 + $asistentes_a[22];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[23]; $asis23 = $asis23 + $asistentes_a[23];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[24]; $asis24 = $asis24 + $asistentes_a[24];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[25]; $asis25 = $asis25 + $asistentes_a[25];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[26]; $asis26 = $asis26 + $asistentes_a[26];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[27]; $asis27 = $asis27 + $asistentes_a[27];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[28]; $asis28 = $asis28 + $asistentes_a[28];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[29]; $asis29 = $asis29 + $asistentes_a[29];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[30]; $asis30 = $asis30 + $asistentes_a[30];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $asistentes_a[31]; $asis31 = $asis31 + $asistentes_a[31];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $total_asis;?></div></td>
+	<td><div align="left" class="Estilo2 Estilo6">
+	<? 
+	if ($total_mat>0) 
+	{
+	  echo round(($total_asis*100)/$total_mat,2)."%"; 
+	  $promedio_gral = $promedio_gral + round(($total_asis*100)/$total_mat,2);
+	  $cont_gral = $cont_gral + 1;
+	}
+	else 
+	  echo "&nbsp;";?></div></td>
+    </tr>
+  <tr>
+    <td><div align="left"><span class="Estilo4">Ausentes</span></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[1]; $inasis1 = $inasis1 + $inasistentes_a[1];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[2]; $inasis2 = $inasis2 + $inasistentes_a[2];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[3]; $inasis3 = $inasis3 + $inasistentes_a[3];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[4]; $inasis4 = $inasis4 + $inasistentes_a[4];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[5]; $inasis5 = $inasis5 + $inasistentes_a[5];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[6]; $inasis6 = $inasis6 + $inasistentes_a[6];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[7]; $inasis7 = $inasis7 + $inasistentes_a[7];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[8]; $inasis8 = $inasis8 + $inasistentes_a[8];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[9]; $inasis9 = $inasis9 + $inasistentes_a[9];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[10]; $inasis10 = $inasis10 + $inasistentes_a[10];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[11]; $inasis11 = $inasis11 + $inasistentes_a[11];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[12]; $inasis12 = $inasis12 + $inasistentes_a[12];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[13]; $inasis13 = $inasis13 + $inasistentes_a[13];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[14]; $inasis14 = $inasis14 + $inasistentes_a[14];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[15]; $inasis15 = $inasis15 + $inasistentes_a[15];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[16]; $inasis16 = $inasis16 + $inasistentes_a[16];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[17]; $inasis17 = $inasis17 + $inasistentes_a[17];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[18]; $inasis18 = $inasis18 + $inasistentes_a[18];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[19]; $inasis19 = $inasis19 + $inasistentes_a[19];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[20]; $inasis20 = $inasis20 + $inasistentes_a[20];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[21]; $inasis21 = $inasis21 + $inasistentes_a[21];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[22]; $inasis22 = $inasis22 + $inasistentes_a[22];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[23]; $inasis23 = $inasis23 + $inasistentes_a[23];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[24]; $inasis24 = $inasis24 + $inasistentes_a[24];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[25]; $inasis25 = $inasis25 + $inasistentes_a[25];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[26]; $inasis26 = $inasis26 + $inasistentes_a[26];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[27]; $inasis27 = $inasis27 + $inasistentes_a[27];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[28]; $inasis28 = $inasis28 + $inasistentes_a[28];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[29]; $inasis29 = $inasis29 + $inasistentes_a[29];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[30]; $inasis30 = $inasis30 + $inasistentes_a[30];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $inasistentes_a[31]; $inasis31 = $inasis31 + $inasistentes_a[31];?></div></td>
+	<td><div align="left" class="Estilo2 Estilo6"><? echo $total_ause;?></div></td>
+    <td>&nbsp;</td>
+	</tr>
+  <tr>
+	<td><div align="left"><span class="Estilo4">Matr&iacute;cula</span></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[1]; $mat1 = $mat1 + $matricula_a[1];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[2]; $mat2 = $mat2 + $matricula_a[2];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[3]; $mat3 = $mat3 + $matricula_a[3];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[4]; $mat4 = $mat4 + $matricula_a[4];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[5]; $mat5 = $mat5 + $matricula_a[5];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[6]; $mat6 = $mat6 + $matricula_a[6];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[7]; $mat7 = $mat7 + $matricula_a[7];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[8]; $mat8 = $mat8 + $matricula_a[8];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[9]; $mat9 = $mat9 + $matricula_a[9];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[10]; $mat10 = $mat10 + $matricula_a[10];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[11]; $mat11 = $mat11 + $matricula_a[11];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[12]; $mat12 = $mat12 + $matricula_a[12];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[13]; $mat13 = $mat13 + $matricula_a[13];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[14]; $mat14 = $mat14 + $matricula_a[14];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[15]; $mat15 = $mat15 + $matricula_a[15];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[16]; $mat16 = $mat16 + $matricula_a[16];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[17]; $mat17 = $mat17 + $matricula_a[17];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[18]; $mat18 = $mat18 + $matricula_a[18];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[19]; $mat19 = $mat19 + $matricula_a[19];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[20]; $mat20 = $mat20 + $matricula_a[20];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[21]; $mat21 = $mat21 + $matricula_a[21];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[22]; $mat22 = $mat22 + $matricula_a[22];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[23]; $mat23 = $mat23 + $matricula_a[23];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[24]; $mat24 = $mat24 + $matricula_a[24];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[25]; $mat25 = $mat25 + $matricula_a[25];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[26]; $mat26 = $mat26 + $matricula_a[26];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[27]; $mat27 = $mat27 + $matricula_a[27];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[28]; $mat28 = $mat28 + $matricula_a[28];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[29]; $mat29 = $mat29 + $matricula_a[29];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[30]; $mat30 = $mat30 + $matricula_a[30];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $matricula_a[31]; $mat31 = $mat31 + $matricula_a[31];?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? echo $total_mat;?></div></td>
+    <td>&nbsp;</td>
+    </tr>
+	<? } ?>
+  <tr>
+    <td colspan="34"><span class="Estilo4">TOTALES</span></td>
+    </tr>
+  <tr>
+    <td><span class="Estilo4">Asistencia</span></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis1>0) echo $asis1; else echo "&nbsp;";?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis2>0) echo $asis2; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis3>0) echo $asis3; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis4>0) echo $asis4; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis5>0) echo $asis5; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis6>0) echo $asis6; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis7>0) echo $asis7; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis8>0) echo $asis8; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis9>0) echo $asis9; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis10>0) echo $asis10; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis11>0) echo $asis11; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis12>0) echo $asis12; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis13>0) echo $asis13; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis14>0) echo $asis14; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis15>0) echo $asis15; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis16>0) echo $asis16; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis17>0) echo $asis17; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis18>0) echo $asis18; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis19>0) echo $asis19; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis20>0) echo $asis20; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis21>0) echo $asis21; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis22>0) echo $asis22; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis23>0) echo $asis23; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis24>0) echo $asis24; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis25>0) echo $asis25; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis26>0) echo $asis26; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis27>0) echo $asis27; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis28>0) echo $asis28; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis29>0) echo $asis29; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis30>0) echo $asis30; else echo "&nbsp;"?></div></td>	
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($asis31>0) echo $asis31; else echo "&nbsp;"?></div></td>		
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><span class="Estilo4">Ausentes</span></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis1>0) echo $inasis1; else echo "&nbsp;";?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis2>0) echo $inasis2; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis3>0) echo $inasis3; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis4>0) echo $inasis4; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis5>0) echo $inasis5; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis6>0) echo $inasis6; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis7>0) echo $inasis7; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis8>0) echo $inasis8; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis9>0) echo $inasis9; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis10>0) echo $inasis10; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis11>0) echo $inasis11; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis12>0) echo $inasis12; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis13>0) echo $inasis13; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis14>0) echo $inasis14; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis15>0) echo $inasis15; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis16>0) echo $inasis16; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis17>0) echo $inasis17; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis18>0) echo $inasis18; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis19>0) echo $inasis19; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis20>0) echo $inasis20; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis21>0) echo $inasis21; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis22>0) echo $inasis22; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis23>0) echo $inasis23; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis24>0) echo $inasis24; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis25>0) echo $inasis25; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis26>0) echo $inasis26; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis27>0) echo $inasis27; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis28>0) echo $inasis28; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis29>0) echo $inasis29; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis30>0) echo $inasis30; else echo "&nbsp;"?></div></td>	
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($inasis31>0) echo $inasis31; else echo "&nbsp;"?></div></td>		
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><span class="Estilo4">Matr&iacute;cula</span></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat1>0) echo $mat1; else echo "&nbsp;";?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat2>0) echo $mat2; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat3>0) echo $mat3; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat4>0) echo $mat4; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat5>0) echo $mat5; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat6>0) echo $mat6; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat7>0) echo $mat7; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat8>0) echo $mat8; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat9>0) echo $mat9; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat10>0) echo $mat10; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat11>0) echo $mat11; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat12>0) echo $mat12; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat13>0) echo $mat13; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat14>0) echo $mat14; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat15>0) echo $mat15; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat16>0) echo $mat16; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat17>0) echo $mat17; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat18>0) echo $mat18; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat19>0) echo $mat19; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat20>0) echo $mat20; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat21>0) echo $mat21; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat22>0) echo $mat22; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat23>0) echo $mat23; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat24>0) echo $mat24; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat25>0) echo $mat25; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat26>0) echo $mat26; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat27>0) echo $mat27; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat28>0) echo $mat28; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat29>0) echo $mat29; else echo "&nbsp;"?></div></td>
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat30>0) echo $mat30; else echo "&nbsp;"?></div></td>	
+    <td><div align="left" class="Estilo2 Estilo6"><? if ($mat31>0) echo $mat31; else echo "&nbsp;"?></div></td>		
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  
+</table>  
+  </td>
+  </tr>
+  
+</table>
+<table width="827" border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><strong>Promedio Asistencia Mes : <? if ($cont_gral>0) echo round($promedio_gral/$cont_gral,2)."%"; else echo "&nbsp;";?></strong></font></div></td>
+  </tr>
+</table>
+</center>
+</body>
+</html>
+<?
+function FechaValida($mes_f, $dia_f, $ano_f, $ano_esc)
+{
+	$sw = 0;
+	$conn=@pg_connect("dbname=coe port=1550 user=postgres password=usuariocoegc10");
+	
+	if (strlen($mes_f)==1)
+		$mes_f = "0".$mes_f;
+	if (strlen($dia_f)==1)
+		$dia_f = "0".$dia_f;
+		
+	$fecha_f = mktime(0,0,0,$mes_f,$dia_f,$ano_f);
+	$dia_pal_f = strftime("%a",$fecha_f);
+	
+	if (checkdate($mes_f, $dia_f, $ano_f) and ($dia_pal_f <> "sáb" and $dia_pal_f <> "dom" )) 
+	{
+		$sql_feriado = "select count(*) as cantidad from feriado where id_ano = " . $ano_esc . " and fecha_inicio <= '".$mes_f."-".$dia_f."-".$ano_f."' and fecha_fin >= '".$mes_f."-".$dia_f."-".$ano_f."'";
+		$result_feriado =@pg_Exec($conn,$sql_feriado);
+		$fila_feriado = @pg_fetch_array($result_feriado,0);	
+		$feriado = $fila_feriado ['cantidad'];
+		if ($feriado==0)
+		{
+			$sql_ano = "select count(*) as cantidad from ano_escolar where id_ano = " . $ano_esc . " and fecha_inicio <= '".$mes_f."-".$dia_f."-".$ano_f."' and fecha_termino >= '".$mes_f."-".$dia_f."-".$ano_f."'";
+			$result_ano =@pg_Exec($conn,$sql_ano );
+			$fila_ano = @pg_fetch_array($result_ano,0);	
+			$fuera_ano = $fila_ano['cantidad'];		
+			if ($fuera_ano==0)
+				$sw = 1;
+			else
+				$sw = 0;
+		}
+		else
+		{
+			$sw = 1;
+		}
+	}
+	else
+	{
+		$sw = 1;
+	}
+		
+	if ($sw == 0)
+		return true;
+	else
+		return false;
+}
+?>

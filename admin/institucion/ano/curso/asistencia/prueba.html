@@ -1,0 +1,155 @@
+<html>
+<head>
+<title>MOVER ENC. prueba 05</title>
+
+<script language= "JavaScript">
+var anchoCelda , altoCelda , contCeldas , pasoH , pasoV ,celdas1 , celdas2 ;
+var dif = 2;
+
+function iniciar(){
+	celdas1 = document.getElementById("filRell").getElementsByTagName( "td" ).length;
+	celdas2 = document.getElementById("encFil").getElementsByTagName( "td" ).length;
+	if(document.all) dif=0;
+	
+	for (j=0; j < celdas1; j++){
+		var anchoEnc = 0;
+		var anchoTab = 0;
+		
+		anchoEnc = document.getElementById( "encCol" ).getElementsByTagName( "td" ).item(j).offsetWidth;
+		anchoTab = document.getElementById( "filRell" ).getElementsByTagName( "td" ).item(j).offsetWidth;
+		
+		anchoCelda = (anchoTab > anchoEnc) ?  document.getElementById("filRell").getElementsByTagName( "td" ).item(j).offsetWidth : document.getElementById("encCol").getElementsByTagName( "td" ).item(j).offsetWidth;
+		
+		if(anchoCelda < 40) anchoCelda = 40; //ANCHO MÍNIMO DE CELDA px
+
+		contCeldas = document.getElementById( "filRell" ).getElementsByTagName( "td" ).item(j).innerHTML;
+		document.getElementById( "filRell" ).getElementsByTagName( "td" ).item(j).innerHTML = contCeldas+"<img style=\"height:0; width:"+anchoCelda+"px;\" class=\"rellH\">";
+		
+		contCeldas = document.getElementById( "encCol" ).getElementsByTagName( "td" ).item(j).innerHTML;
+		document.getElementById( "encCol" ).getElementsByTagName( "td" ).item(j).innerHTML ="<img style=\"height:0; width:"+(anchoCelda-dif)+"px;\" class=\"rellH\"><br>"+contCeldas;
+	}
+
+	document.getElementById("contenido").className = "tabla";
+
+	for (i=0; i < celdas2; i++){
+		var altoEnc = 0;
+		var altoTab = 0;
+		altoEnc = document.getElementById( "encFil" ).getElementsByTagName( "tr" ).item(i).getElementsByTagName( "td" ).item(0).offsetHeight;
+		altoTab = document.getElementById( "contenido" ).getElementsByTagName( "tr" ).item(i).getElementsByTagName( "td" ).item(0).offsetHeight;
+		
+		altoCelda = (altoTab > altoEnc)? document.getElementById( "contenido" ).getElementsByTagName( "tr" ).item(i).getElementsByTagName( "td" ).item(0).offsetHeight : document.getElementById( "encFil" ).getElementsByTagName( "tr" ).item(i).getElementsByTagName( "td" ).item(0).offsetHeight;
+		
+		document.getElementById( "contenido" ).getElementsByTagName( "tr" ).item(i).getElementsByTagName( "td" ).item(0).style.height = altoCelda+"px";
+		
+		document.getElementById( "encFil" ).getElementsByTagName( "td" ).item(i).style.height = altoCelda+"px";
+	}
+}
+
+function desplaza(){
+	pasoH = document.getElementById("contenedor").scrollLeft;
+	pasoV = document.getElementById("contenedor").scrollTop;
+	document.getElementById("contEncCol").scrollLeft = pasoH;
+	document.getElementById("contEncFil").scrollTop = pasoV;
+}
+
+</script>
+<style>
+#alfabetos{border-collapse:collapse; background:buttonface;}
+
+#alfabetos td{font:12px "arial" "helvetica" "sans-serif"; border:1px solid; text-align:center; vertical-align:top; }
+
+html>body #contEncCol{overflow:-moz-scrollbars-vertical; background:#ccf width:16em; //ANCHO TABLA}
+* html #contEncCol{overflow:hidden; overflow-y:scroll; background:#ccf; width:16em; //ANCHO TABLA}
+
+html>body #contEncFil{overflow:-moz-scrollbars-horizontal; background:#ccf; height:8em; //ALTO TABLA}
+* html #contEncFil{overflow:hidden; overflow-x:scroll; background:#ccf; height:8em; //ALTO TABLA}
+
+#contEncCol , #contEncFil{scrollbar-face-color:buttonface; scrollbar-highlight-color:buttonface; scrollbar-shadow-color:buttonface; scrollbar-arrow-color:buttonface; scrollbar-track-color:buttonface; scrollbar-base-color:buttonface; scrollbar-3dlight-color:buttonface; scrollbar-darkshadow-color:buttonface; }
+
+#contenedor{overflow:auto; width:16em; height:8em; //ANCHO Y ALTO TABLA}
+
+#encCol td{text-align:center; vertical-align:middle; border:1px solid;}
+#encFil {width:100%;}
+#encCol {height:100%}
+
+#contenido{background:#fff;}
+
+#contenido td{text-align:left; white-space:nowrap;}
+
+.tabla td{border:1px solid;}
+
+.rellH{ position:relative; top:0; z-index:-1; bor¬der:1px solid red;}
+</style>
+</head>
+
+<body onload="setTimeout('iniciar()' ,500)">
+<h2>Tabla que desplaza encabezados con el contenido.</h2>
+
+<table id="alfabetos">
+<tr>
+<td></td>
+<td>
+<div id="contEncCol">
+ <table id="encCol">
+ <tr>
+ <td> A </td><td> B </td><td> C </td><td> D </td><td> E </td>
+ </tr>
+ </table>
+</div>
+</td>
+</tr>
+
+<tr>
+<td>
+<div id="contEncFil">
+ <table id="encFil">
+ <tr><td>1</td></tr>
+ <tr><td>2</td></tr>
+ <tr><td>3</td></tr>
+ <tr><td>4</td></tr>
+ <tr><td>5</td></tr>
+ <tr><td>6</td></tr>
+ <tr><td> <!-- FILA VACÍA --> </td></tr>
+ </table>
+</div>
+</td>
+<td>
+<div id="contenedor" onscroll="desplaza()">
+ <table id="contenido">
+ <tr>
+ <td> ñ</td><td> alfa</td><td> bravo</td><td> charly</td><td> delta</td>
+ </tr>
+ <tr>
+ <td> ñ</td><td> eco</td><td> foxtrot</td><td> golf</td><td> hotel</td>
+ </tr>
+ <tr>
+ <td> ñ</td><td> indio</td><td> julieta</td><td> kilo</td><td> lima</td>
+ </tr>
+ <tr>
+ <td> ñ </td><td> mike</td><td> noviembre <br><i>un salto</i></td><td> oscar</td><td> papa</td>
+ </tr>
+ <tr>
+ <td> ñ ñ</td><td> quebec</td><td> romeo</td><td> sierra</td><td> tango</td>
+ </tr>
+ <tr>
+ <td> ñ </td><td> uniforme</td><td> victor</td><td> whisky</td><td> x-ray</td>
+ </tr>
+ <tr id="filRell">
+ <td> <!-- FILA VACÍA --> </td><td> </td><td> </td><td> </td><td> </td>
+ </tr>
+ </table>
+</div>
+</td>
+</tr>
+</table>
+<p>
+<b>NOTAS : </b>
+<ol type="1">
+<li>El ancho mínimo de las celdas es de 40px.
+<li>El ancho se calcula tomando el mayor valor entre la celda de encabezado y la de contenido en cada columna.
+<li>El texto en las celdas no tiene salto de línea hasta un <tt>&lt;br></tt>. (<i>Bug</i> IE5 : si el texto supera el ancho mínimo, salta en cada espacio, guión, ...)
+<li>Al estar calculado en <tt>em</tt>, cambiando la medida de fuente en la tabla principal, se ajustan las medidas interiores (excepto el ancho mínimo).
+<li>En IE5 se ven las <i>scrollbars</i> de relleno.
+</ol>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<TITLE>MOVER ENC. prueba 02</TITLE>
+<script language= "JavaScript">
+var ancho , alto , cCeldas , celdas , pasoH , pasoV;
+
+function iniciar(){
+	celdas0 = document.getElementById("encCol").getElementsByTagName("td").length;
+	celdas1 = document.getElementById("contenido").getElementsByTagName("td").length;
+	
+	for (i=0; i<celdas0;i++){
+		cCeldas = document.getElementById("encCol").getElementsByTagName("td").item(i).innerHTML;
+		document.getElementById("encCol").getElementsByTagName("td").item(i).innerHTML = cCeldas+"<img class=\"rell\">";
+	}
+	
+	for (j=0; j<celdas1;j++){
+		cCeldas = document.getElementById("contenido").getElementsByTagName("td").item(j).innerHTML;
+		document.getElementById("contenido").getElementsByTagName("td").item(j).innerHTML = cCeldas+"<img class=\"rell\">";
+	}
+}
+
+function desplaza(){
+pasoH = document.getElementById("contenedor").scrollLeft;
+pasoV = document.getElementById("contenedor").scrollTop;
+document.getElementById("contEncCol").scrollLeft = pasoH;
+document.getElementById("contEncFil").scrollTop = pasoV;
+}
+
+</script>
+<style>
+table{border-collapse:collapse}
+table td{font:12px monospace; border:1px solid; text-align:center; height:1.5em}
+
+body #contEncCol{overflow:-moz-scrollbars-vertical; background:#ccc width:20em; //ANCHO TABLA}
+#contEncCol{overflow:hidden; overflow-y:scroll; background:#ccc; width:20em}
+
+html>body #contEncFil{overflow:-moz-scrollbars-horizontal; background:#ccc; height:8em; //ALTO TABLA}
+#contEncFil{overflow:hidden; overflow-x:scroll; background:#ccc; height:8em}
+
+#contenedor{overflow:auto; width:20em; height:8em}
+#contenido{}
+.tabla td{border:1px solid; width:7em}
+.rell{width:7em; height:0; position:relative; top:-1em; z-index:0; bor der:1px solid red}
+</style>
+</HEAD>
+<BODY onload=iniciar()>
+<h2>Tabla que desplaza encabezados con el contenido.</h2>
+
+<table>
+<tr>
+<td>/</td>
+<td>
+<div id="contEncCol">
+ <table class="tabla" id="encCol">
+ <tr>
+ <td> A </td><td> B </td><td> C </td><td> D </td>
+ </tr>
+ </table>
+</div>
+</td>
+</tr>
+
+<tr>
+<td>
+<div id="contEncFil">
+ <table Id="encFil">
+ <tr><td>1</td></tr>
+ <tr><td>2</td></tr>
+ <tr><td>3</td></tr>
+ <tr><td>4</td></tr>
+ <tr><td>5</td></tr>
+ <tr><td>6</td></tr>
+ </table>
+</div>
+</td>
+<td>
+<div id="contenedor" onscroll="desplaza()">
+ <table class="tabla" id= "contenido">
+ <tr>
+ <td> alfa</td><td> bravo</td><td> charly</td><td> delta</td>
+ </tr>
+ <tr>
+ <td> eco</td><td> foxtrot</td><td> golf</td><td> hotel</td>
+ </tr>
+ <tr>
+ <td> indio</td><td> julieta</td><td> kilo</td><td> lima</td>
+ </tr>
+ <tr>
+ <td> mike</td><td> noviembre</td><td> oscar</td><td> papa</td>
+ </tr>
+ <tr>
+ <td> quebec</td><td> romeo</td><td> sierra</td><td> tango</td>
+ </tr>
+ <tr>
+ <td> uniforme</td><td> victor</td><td> whisky</td><td> x-ray</td>
+ </tr>
+ </table>
+</div>
+</td>
+</tr>
+</table>
+
+</BODY>
+</HTML>

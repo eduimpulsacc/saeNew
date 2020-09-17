@@ -1,0 +1,26 @@
+Área de desarrollo
+	1) Área  de desarrollo psicobiologicas 
+		1.-Cuida su higiene y presentación personal	Siempre#S         
+		2.-Se recrea de acuerdo a su etapa de desarrollo 	Siempre#S         
+		3.-Desarrolla trabajo escolar en forma sistemática y continua 	Siempre#S         
+		4.-Trata de resolver los problemas que se le presentan 	Generalmente#G         
+		5.-Otros:	
+	2) Área Social 
+		1.-Participa en actividades de grupo	Siempre#S         
+		2.-Actúa con responsabilidad en las actividades que se compromete	Siempre#S         
+		3.-mantiene buenas relaciones con sus compañeros 	Siempre#S         
+		4.-Manifiesta una actitud deferente y respetuosa con los miembros de su comunidad 	Siempre#S         
+		5.-Otros:	
+	3) Área Afectiva 
+		1.-Demuestra preocupación por los problemas de los demás 	Siempre#S         
+		2.-Manifiesta sentimientos de agrado frente a las diferentes actividades que le ofrece la unidad educativa 	Siempre#S         
+		3.-Trata de superar sus limitaciones 	Generalmente#G         
+		4.-Reconoce sus errores y trata de corregirlos 	Siempre#S         
+		5.- Reconoce aspectos positivos de personalidad 	Siempre#S         
+		6.- Manifiesta disposición para acatar las normas establecidas por la unidad educativa 	Siempre#S         
+		7.- Otros.	
+	4) Área Vocacional 
+		1.-Se interesa por el área 	
+		2.-Manifiesta actitudes  y/o habilidades para:	
+		3.-Existe congruencia entre los intereses y habilidades manifestados 	
+		4.-Aspiraciones de prosecución de estudios  relacionados con su futuro profesional  y/o laboral	

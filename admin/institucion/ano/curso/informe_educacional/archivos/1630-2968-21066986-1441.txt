@@ -1,0 +1,34 @@
+AREAS DE DESARROLLO  /  INDICADORES
+	SOLIDARIDAD
+		Se integra positivamente en los grupos de trabajo	SIEMPRE#S         
+		Es  generoso(a), da muestra de solidaridad	SIEMPRE#S         
+		Es capaz de escuchar y comprender los sentimientos de otros	SIEMPRE#S         
+	AMISTAD Y COMPAÑERISMO
+		Comparte con los demás sus juegos y útiles escolares	SIEMPRE#S         
+		Es amistoso(a) y amable con sus compañeros	SIEMPRE#S         
+		Es tolerante con los que expresan ideas diferentes	SIEMPRE#S         
+		No hiere ni se burla de sus compañeros	SIEMPRE#S         
+		Hace buen uso del lenguaje en su trato con sus compañeros	SIEMPRE#S         
+		Respeta turno y derechos de los demás	SIEMPRE#S         
+	HIGIENE PERSONAL Y  USO DE UNIFORME INSTITUCIONAL
+		Usa en forma adecuada el uniforme escolar	SIEMPRE#S         
+		Cumple las normas de representación personal dentro del establecimiento	SIEMPRE#S         
+	DESARROLLO CRISTIANO
+		Respeta las creencias religiosas y denominacionales	SIEMPRE#S         
+		Manifiesta actitud  de respeto durante las actividades religiosas de la institución	SIEMPRE#S         
+	RESPONSABILIDAD Y DISCIPLINA ESCOLAR
+		Usa y cuida adecuadamente las instalaciones y servicios del colegio	SIEMPRE#S         
+		Se presenta a clases con tareas y trabajos dados en forma puntual	GENERALMENTE#G         
+		Mantiene sus cuadernos ordenados y  contenidos al día	GENERALMENTE#G         
+		Participa y está atento en clases	GENERALMENTE#G         
+		Es obediente y cumple las instrucciones que recibe	SIEMPRE#S         
+		Es puntual en la llegada al colegio y horas de clases	SIEMPRE#S         
+		Termina las actividades y trabajos que empieza	SIEMPRE#S         
+		Cumple con la calendarización de pruebas 	SIEMPRE#S         
+		Respeta y obedece la autoridad del profesor(a)	SIEMPRE#S         
+		Participa en actividades extracurriculares	SIEMPRE#S         
+	RESPONSABILIDAD Y PARTICIPACIÓN DEL APODERADO
+		Asiste regularmente a la reuniones de padres y apoderados	SIEMPRE#S         
+		Participa en programas institucionales donde es invitado	SIEMPRE#S         
+		Se involucra en el proceso de apoyo pedagógico de su  pupilo (a)	SIEMPRE#S         
+		Manifiesta  respeto por la filosofía educativa de la institución	SIEMPRE#S         

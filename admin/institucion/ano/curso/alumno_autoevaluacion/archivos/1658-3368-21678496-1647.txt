@@ -1,0 +1,21 @@
+ÁREAS DE DESARROLLO
+	ÁREA PSICOLÓGICA
+		Cuida su higiene y presentación personal	Siempre#S         
+		Se recrea de acuerdo a su etapa de desarrollo	Siempre#S         
+		Desarrolla el trabajo escolar en forma sistemática y continua	Generalmente#G         
+		Trata de resolver los problemas que se le presentan	Siempre#S         
+	ÁREA SOCIAL
+		Participa en actividades de grupo	Siempre#S         
+		Actúa con responsabilidad en las actividades en que se compromete	Siempre#S         
+		Mantiene buenas relaciones con sus compañeros	Siempre#S         
+		Mantiene una actitud deferente y respetuosa con Los miembros de la comunidad	Siempre#S         
+	ÁREA AFECTIVA
+		Demuestra preocupación por los problemas de los demás	Siempre#S         
+		Manifiesta sentimientos de agrado frente a las diferentes actividades que le ofrece la Unidad Educativa	Generalmente#G         
+		Reconoce sus errores. Trata de corregir sus errores	Siempre#S         
+		Manifiesta disposición para acatar las normas establecidas en la Unidad Educativa	Generalmente#G         
+	APTITUDES Y/O HABILIDADES
+		Manifiesta Aptitudes y/o habilidades para	
+		Existe congruencia entre los intereses y habilidades manifestados    	Siempre#S         
+	INTERESES 
+		Se interesa por el área	
