@@ -24,8 +24,7 @@ return $rs;
 }
 
 public function existPeriodo($conn,$ano,$ini,$ter){
-$sql="select * from gestion_periodo where id_ano=$ano and fecha_desde between '$ini' and '$ter'
-or fecha_hasta between '$ini' and '$ter'";
+$sql="select * from gestion_periodo where id_ano=$ano and fecha_desde <=$ini' and  fecha_hasta >= '$ter'";
 $rs = pg_exec($conn,$sql);
 return $rs;
 }
@@ -90,4 +89,21 @@ $rs = pg_exec($conn,$sql);
 $cant = pg_result($rs,0);
 return $cant;
 }
+
+public function delRespuestas($conn,$id_per){
+$sql="delete from gestion_periodo_respuesta where id_periodo = $id_per";
+
+$rs = pg_exec($conn,$sql);
+return $rs;
+}
+
+
+public function delPeriodo($conn,$id_per){
+ $sql="delete from gestion_periodo where id_gestion = $id_per";
+
+$rs = pg_exec($conn,$sql);
+return $rs;
+}
+
+
 }//fin clase	?>

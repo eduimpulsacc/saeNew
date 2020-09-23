@@ -16,18 +16,24 @@ $listaP = $obj_gestion->getPeriodo($conn,$_ANO);
     <td align="center">Periodo</td>
     <td align="center">Ingresar</td>
     <td align="center">Descargar</td>
+   <?php  //if($_PERFIL==0){?>
+    <td align="center">Eliminar</td>
+    <?php //}?>
     </tr>
    <?php  for($l=0;$l<pg_numrows($listaP);$l++){
 	   $lista = pg_fetch_array($listaP,$l);
 	   ?>
   <tr class="textosimple">
-    <td>Del <?php echo CambioFD($lista['fecha_desde']) ?> al <?php echo CambioFD($lista['fecha_hasta']) ?></td>
+    <td>Del <span id="fec<?php echo $lista['id_gestion'] ?>"><?php echo CambioFD($lista['fecha_desde']) ?> al <?php echo CambioFD($lista['fecha_hasta']) ?></span></td>
     <td align="center" valign="middle"><input type="button" name="button" id="button" value="Ingresar" onclick="ingPer(<?php echo $lista['id_gestion'] ?>)" class="botonXX" /></td>
     <td align="center">
     <!--onclick="window.open('generaExcel.php?ipe=<?php echo $lista['id_gestion'] ?>','_blank');"-->
     <input type="button" name="button2" id="button2" value="Descargar" class="botonXX" onclick="revisaRes(<?php echo $lista['id_gestion'] ?>)" />
     
     </td>
+    <?php  //if($_PERFIL==0){?>
+    <td align="center"><input type="button" name="button3" id="button3" value="Eliminar" onclick="delPer(<?php echo $lista['id_gestion'] ?>)" class="botonXX" /></td>
+    <?php //}?>
   </tr>
     <?php }?>
 </table>
@@ -185,5 +191,17 @@ if($funcion==7){
 		echo 1;	
 	}
 	
+}
+
+if($funcion==8){
+$ext = $obj_gestion->cuentaRes($conn,$_ANO,$per);
+if($ext>0){
+	$delres = $obj_gestion->delRespuestas($conn,$per);
+	
+	}
+$delper= $obj_gestion->delPeriodo($conn,$per);
+
+//echo ($delper)?1:0;
+echo 1;
 }
 ?>

@@ -198,12 +198,12 @@ var termino = $("#fter").val();
 else if(termino.length==0){
 	alert("Debe ingresar Fecha T\xe9rmino periodo")
 }
+
 else if(cfini > cfter){
 	alert("Fecha Inicio debe ser menor a Fecha T\xe9rmino");
 }
 else{
-	
-	var parametros = "funcion="+funcion+"&ini="+inicio+"&ter="+termino;
+var parametros = "funcion="+funcion+"&ini="+inicio+"&ter="+termino;
 	$.ajax({
 		 		  url:'contGestion.php',
 		 		  data:parametros,
@@ -225,6 +225,8 @@ else{
 }
 function ingPer(p){
 var funcion=4;
+ var txTit = $("#fec"+p).text();
+
 var parametros= "funcion="+funcion+"&pe="+p;
    $.ajax({
 	  url:'contGestion.php',
@@ -243,7 +245,7 @@ var parametros= "funcion="+funcion+"&pe="+p;
 				  resizable: false,
 				  show: "fold",
 				  hide: "scale",
-				  title: "Ingresar informaci&oacute;n",
+				  title: "Ingresar informaci&oacute;n periodo "+txTit,
 		
 			 buttons: [
         {
@@ -318,6 +320,24 @@ $.ajax({
 		 			  } 
 		 		  })
 	
+}
+
+function delPer(p){
+if (confirm("\xbfSeguro desea eliminar periodo?")){
+	var funcion =8;
+var parametros= "funcion="+funcion+"&per="+p;
+$.ajax({
+		 		  url:'contGestion.php',
+		 		  data:parametros,
+		 		  type:'POST',
+		 		  success:function(data){
+ 					if(data==1){
+					alert("Periodo eliminado");
+					 cargaPeriodo();
+					}		 			     
+		 			  } 
+		 		  })
+	}	
 }
 </script>
 <style>
